@@ -13,21 +13,17 @@ model Cat {
   profile   String  @default("")
   ImageKey  String?
   ImageUrl  String?
-  types     CatBreed[]
+
+  breedId   Int
+  breed     Breed  @relation(fields: [breedId], references: [id], onDelete: Cascade)
 }
 
+// カテゴリーは１つ
 model Breed {
   id    Int      @id @default(autoincrement())
   name  String
-  cats  CatBreed[]
-}
 
-model CatBreed {
-  id        Int     @id @default(autoincrement())
-  catId     Int
-  breedId   Int     @map("breed_id")
-  cat       Cat     @relation(fields: [catId], references: [id], onDelete: Cascade)
-  breed     Breed   @relation(fields: [breedId], references: [id], onDelete: Cascade)
+  cats  Cat[]
 }
 
 
