@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,10 +28,19 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <nav>
+          <ul className="flex justify-end gap-3 mt-3 mr-3">
+            <li>ホーム</li>
+            <li>投稿一覧</li>
+            <li>プロフィール</li>
+          </ul>
+        </nav>
+        {children}
+      </body>
     </html>
   );
 }
