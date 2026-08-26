@@ -10,7 +10,7 @@ model Cat {
   id        Int     @id @default(autoincrement())
   name      String
   sex       String
-  profile   String  @default("")
+  birthday   String  @default("")
   ImageKey  String?
   ImageUrl  String?
 

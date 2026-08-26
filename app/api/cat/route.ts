@@ -13,7 +13,7 @@ export const GET = async (request: NextRequest) => {
         id: true,
         name: true,
         sex: true,
-        profile: true,
+        birthday: true,
         ImageKey: true,
 
         breed: {
@@ -28,7 +28,6 @@ export const GET = async (request: NextRequest) => {
     return NextResponse.json({ cats }, { status: 200 })
 
   } catch(error) {
-    console.error("GET /api/cat ERROR:", error)
     if(error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 400 })
   }
