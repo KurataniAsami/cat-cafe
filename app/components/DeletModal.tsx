@@ -12,25 +12,22 @@ import {
 import { Button } from "@/components/ui/button"
 
 type deleteModalProps = {
-  onClose: (open: boolean) => void
+  onClose: () => void
   onDelete: () => void
-  open: boolean
+  isOpen: boolean
 }
 
 export default function DeleteModal({
   onClose,
   onDelete,
-  open,
+  isOpen,
 }:deleteModalProps) {
 
   return (
     <AlertDialog
-      open={open}
+      open={isOpen}
       onOpenChange={onClose}
     >
-      <AlertDialogTrigger render={<Button variant="outline" />}>
-        削除
-      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>削除しますか?</AlertDialogTitle>
