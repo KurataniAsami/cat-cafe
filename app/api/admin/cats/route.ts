@@ -32,6 +32,7 @@ export const POST = async (request: NextRequest) => {
       id: catData.id
     })
   } catch(error) {
+    console.error("猫の作成エラー:", error)
     if(error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 400 })
   }

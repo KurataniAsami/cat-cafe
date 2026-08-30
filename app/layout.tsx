@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <nav>
           <ul className="flex justify-end gap-3 mt-3 mr-3">
-            <li>ホーム</li>
+            <Link href="/">ホーム</Link>
             <li>投稿一覧</li>
             <Link href="/contact">お問い合わせ</Link>
             <Link href="/admin">管理画面</Link>

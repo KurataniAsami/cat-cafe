@@ -75,8 +75,6 @@ export default function CreateCatPage() {
         throw new Error("猫を登録できませんでした")
       }
 
-      
-
       router.push("/")
     } catch(error) {
       setError(error instanceof Error ? error.message: '猫を登録できませんでした')
@@ -106,7 +104,7 @@ export default function CreateCatPage() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="focus:outline-none"
+            className="border border-gray-200 rounded-md px-2 py-0.5 w-[180px]"
             placeholder="タマ"
           />
         </div>
@@ -165,7 +163,7 @@ export default function CreateCatPage() {
           </Select>
         </div>
 
-        <div className="mt-2">
+        <div className="mt-3 flex flex-col">
           <label>
             誕生日
           </label>
@@ -173,11 +171,12 @@ export default function CreateCatPage() {
             type="date"
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
-            className="focus:outline-none"
+            className="border rounded-md border-gray-200 mt-1 px-2 py-0.5
+              text-gray-500 focus:outline-none"
           />
         </div>
 
-        <div className="flex justify-between items-center border-t border-t-gray-500 mt-2 pt-4">
+        <div className="flex justify-between items-center mt-2 pt-4">
           {/* <label htmlFor="ImageKey">
             <ImageIcon/>
           </label>

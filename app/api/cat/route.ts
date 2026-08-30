@@ -19,7 +19,8 @@ export const GET = async (request: NextRequest) => {
         breed: {
           select: {
             id: true,
-            name: true
+            name: true,
+            slug: true
           }
         }
       }

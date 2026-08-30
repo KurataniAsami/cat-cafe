@@ -9,6 +9,7 @@ export type CatList = {
   breed: {
     id: number
     name: string
+    slug: string
   }
 }
 
@@ -18,10 +19,12 @@ export type CatIndexResponse = {
 
 // タイプ別表示
 export type BreedIndexResponse = {
-  breed: CatList[]
+  breed: Breed[]
 }
 
 export type Breed = {
   id: number
   name: string
+  slug: string
 }
+

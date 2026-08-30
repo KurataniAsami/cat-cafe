@@ -10,7 +10,7 @@ model Cat {
   id        Int     @id @default(autoincrement())
   name      String
   sex       String
-  birthday  String  @default("")
+  birthday  String
   ImageKey  String?
   ImageUrl  String?
 
@@ -22,6 +22,7 @@ model Cat {
 model Breed {
   id    Int      @id @default(autoincrement())
   name  String
+  slug  String?  @unique
 
   cats  Cat[]
 }
