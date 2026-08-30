@@ -92,11 +92,15 @@ export default function CreateCatPage() {
     ]
 
   return (
-    <div className="mt-5 py-3">
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className="flex flex-col items-center mt-5 py-3">
+      <h1 className="text-2xl">猫の追加</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="mt-3"
+      >
+        <div className="flex flex-col">
           <label>
-            名前：
+            名前
           </label>
           <input
             type="text"
@@ -107,15 +111,15 @@ export default function CreateCatPage() {
           />
         </div>
 
-        <div>
+        <div className="mt-2">
           <label>
-            性別：
+            性別
           </label>
           <Select
             value={sex}
             onValueChange={(value) => setSex(value ?? "")}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] mt-1">
               <SelectValue placeholder="性別を選択" />
             </SelectTrigger>
             <SelectContent>
@@ -130,7 +134,7 @@ export default function CreateCatPage() {
           </Select>
         </div>
 
-        <div>
+        <div className="mt-2">
           <label>
             種類
           </label>
@@ -138,7 +142,7 @@ export default function CreateCatPage() {
             value={breedId === null ? "" : String(breedId)}  // placeholderを表示させる
             onValueChange={(value) => setBreedId(Number(value))}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] mt-1">
               <SelectValue>
                 {breedId === null
                   ? "品種を選択"
@@ -161,7 +165,7 @@ export default function CreateCatPage() {
           </Select>
         </div>
 
-        <div>
+        <div className="mt-2">
           <label>
             誕生日
           </label>
@@ -186,9 +190,9 @@ export default function CreateCatPage() {
 
           <button
             type="submit"
-            className="bg-gray-700 text-black rounded-3xl font-bold px-3 py-1 mt-3"
+            className="bg-orange-400 text-white rounded-3xl font-bold px-4 py-2 mt-3"
           >
-            POST
+            追加する
           </button>
         </div>
       </form>

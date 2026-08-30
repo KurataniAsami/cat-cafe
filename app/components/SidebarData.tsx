@@ -7,9 +7,9 @@ export const SidebarData = [
     link: "/"
   },
   {
-    title: "猫リスト管理",
+    title: "猫リスト追加",
     icon: "",
-    link: "/"
+    link: "/admin/catlist/create"
   },
   {
     title: "ブログ管理",  

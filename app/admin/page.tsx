@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CatList } from "@/types/cat";
 import { Button } from "@/components/ui/button"
+import DeleteModal from "../components/DeletModal";
 
-export default function Home() {
+export default function AdminHome() {
 
   const [cats, setCats] = useState<CatList[]>([])
   const [loading, setLoading] = useState(true)
@@ -22,31 +23,30 @@ export default function Home() {
 
   return (
     <div>
-      <h1 className="text-center mt-3">お迎えしている猫たち</h1>
+      <h1 className="text-center mt-3">登録済みの猫</h1>
 
-      <ul className="flex justify-center gap-3 mt-5">
+      <ul className="flex flex-col justify-center gap-3 mt-5">
         {cats.map((cat) => {
           return (
             <li
               key={cat.id}
-              className="flex flex-col"
+              className="flex items-center gap-2"
             >
-              <span className="text-xl font-bold">{cat.name}</span>
+              <span className="w-32 text-xl font-bold">{cat.name}</span>
 
-                  <Button
-                    variant="outline"
+                  <div
                     // flexの時のボタン幅調整(flexない時はinline-block)
-                    className="self-start bg-green-400 text-black font-bold"  
-                    disabled
+                    className="self-start text-black font-bold"  
                   >
-                    {cat.breed.name}
-                  </Button>
+                    ({cat.breed.name}/
+                  </div>
               
-              <span className="text-orange-400 mt-2">{cat.sex}</span>
-              <span className="text-gray-600 mt-2">{cat.birthday}</span>
+              <span>{cat.sex})</span>
             </li>
           )
         })}
+
+        <DeleteModal/>
       </ul>
     </div>
   );
