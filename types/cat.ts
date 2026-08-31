@@ -28,3 +28,20 @@ export type Breed = {
   slug: string
 }
 
+// ブログ一覧表示
+export type BlogList = {
+  id: number
+  title: string
+  content: string
+  thumbnailImageKey: string
+  createdAt: Date
+
+  catBlogCategory: {
+    id: number
+    name: string
+  }
+}
+
+export type BlogIndexResponse = {
+  blogs: BlogList[]
+}

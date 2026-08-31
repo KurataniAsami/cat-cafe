@@ -27,6 +27,23 @@ model Breed {
   cats  Cat[]
 }
 
+// 猫ブログ
+model CatBlog {
+  id                  Int     @id @default(autoincrement())
+  title               String
+  content             String
+  thumbnailImageKey   String?
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  categoryId   Int
+  catBlogCategory     CatBlogCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model CatBlogCategory {
+  id        Int       @id @default(autoincrement())
+  name      String
+  catBlog   CatBlog[]
+}
 
 
 // 過去のプロジェクト

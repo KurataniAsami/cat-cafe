@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Breed, CatList } from "@/types/cat";
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
+import BlogPage from "./components/BlogList";
 
 
 export default function Home() {
@@ -89,6 +88,12 @@ export default function Home() {
           )
         })}
       </ul>
+
+      {/* blog */}
+      <h1 className="text-center mt-10 text-2xl">スタッフブログ</h1>
+      <p className="text-center mt-3">猫たちの日常やカフェの最新情報をお届けします</p>
+      {/* <CatBlogList limit={3} /> */}
+      <BlogPage/>
     </div>
   );
 }

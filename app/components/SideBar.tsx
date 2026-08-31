@@ -11,7 +11,7 @@ export default function Sidebar() {
           <Link
             href={value.link}
           >
-            <div className="inline-flex gap-1 cursor-pointer px-4 py-3 rounded-xl hover:bg-gray-800">
+            <div className="inline-flex gap-1 cursor-pointer px-4 py-3 rounded-xl hover:bg-orange-300">
               <div>{value.icon}</div>
               <div className="mt-1">{value.title}</div>
             </div>  
