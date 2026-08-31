@@ -1,15 +1,11 @@
 'use client'
 
-import { BlogList } from "@/types/cat"
-import Link from "next/link"
 import { useEffect, useState } from "react"
+import Link from "next/link"
+import { BlogList } from "@/types/cat"
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 
