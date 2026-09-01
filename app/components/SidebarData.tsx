@@ -12,9 +12,9 @@ export const SidebarData = [
     link: "/admin/catlist/create"
   },
   {
-    title: "ブログ管理",  
+    title: "ブログ作成",  
     icon: "",
-    link: ""
+    link: "/blog/create"
   },
   {
     title: "お問い合わせ管理",

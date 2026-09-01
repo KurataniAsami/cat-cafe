@@ -35,8 +35,9 @@ model CatBlog {
   thumbnailImageKey   String?
   createdAt           DateTime @default(now()) @map("created_at")
 
-  categoryId   Int
-  catBlogCategory     CatBlogCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  // カテゴリーは必須にしない
+  categoryId          Int?
+  catBlogCategory     CatBlogCategory?  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model CatBlogCategory {
