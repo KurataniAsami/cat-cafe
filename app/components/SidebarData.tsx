@@ -14,7 +14,12 @@ export const SidebarData = [
   {
     title: "ブログ作成",  
     icon: "",
-    link: "/blog/create"
+    link: "/admin/blog/create"
+  },
+  {
+    title: "ブログ管理",  
+    icon: "",
+    link: "/admin/blog"
   },
   {
     title: "お問い合わせ管理",

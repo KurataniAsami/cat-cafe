@@ -24,7 +24,7 @@ export const POST = async (request: NextRequest) => {
       data: {
         title,
         content,
-        categoryId,  // prismaの型はnullを使えないからAPIではundefinedとなる
+        categoryId,
         thumbnailImageKey
       }
     })
@@ -34,6 +34,6 @@ export const POST = async (request: NextRequest) => {
     })
   } catch(error) {
     if(error instanceof Error)
-      return NextResponse.json({ message: error.message }, { status: 401 })
+      return NextResponse.json({ message: error.message }, { status: 500 })
   }
 }

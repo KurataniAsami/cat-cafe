@@ -45,3 +45,13 @@ export type BlogList = {
 export type BlogIndexResponse = {
   blogs: BlogList[]
 }
+
+// ブログカテゴリー表示
+export type BlogCategory = {
+  id: number
+  name: string
+}
+
+export type BlogCategoryIndexResponse = {
+  categories: BlogCategory[]
+}

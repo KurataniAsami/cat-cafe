@@ -8,12 +8,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { BlogCategory } from "@/types/cat"
+import { Dispatch, SetStateAction } from "react"
 
-export default function BlogForm() {
+type createBlogProps = {
+  onCreateSubmit: (e: { preventDefault: () => void; }) => Promise<void>
+  title: string
+  setTitle: Dispatch<SetStateAction<string>>
+  content: string
+  setContent: Dispatch<SetStateAction<string>>
+  thumbnailImageKey: string | null
+  setThumbnailImageKey: Dispatch<SetStateAction<string | null>>
+  categoryId: number | null
+  setCategoryId: Dispatch<SetStateAction<number | null>>
+  categories: BlogCategory[]
+  setCategories: Dispatch<SetStateAction<BlogCategory[]>>
+}
+
+export default function BlogForm({
+  onCreateSubmit,
+  title,
+  setTitle,
+  content,
+  setContent,
+  thumbnailImageKey,
+  setThumbnailImageKey,
+  categoryId,
+  setCategoryId,
+  categories,
+  setCategories
+}:createBlogProps) {
+
+  return (
   <div className="flex flex-col items-center mt-5 py-3">
       <h1 className="text-2xl">記事の作成</h1>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onCreateSubmit}
         className="mt-3"
       >
         <div className="flex flex-col">
@@ -41,31 +71,30 @@ export default function BlogForm() {
           />
         </div>
 
-
         <div className="mt-2">
           <label>
-            種類
+            カテゴリー
           </label>
           <Select
-            value={breedId === null ? "" : String(breedId)}  // placeholderを表示させる
-            onValueChange={(value) => setBreedId(Number(value))}
+            value={categoryId === null ? "" : String(categoryId)}  
+            onValueChange={(value) => setCategoryId(Number(value))}
           >
             <SelectTrigger className="w-[180px] mt-1">
               <SelectValue>
-                {breedId === null
-                  ? "品種を選択"
-                  : breeds.find((b) => b.id === breedId)?.name}
+                {categoryId !== null
+                  ? categories.find((category) => category.id === categoryId)?.name
+                  : "カテゴリーを選択"}
               </SelectValue>
             </SelectTrigger>
 
             <SelectContent>
               <SelectGroup>
-                {breeds.map((breed) => (
+                {categories.map((category) => (
                   <SelectItem
-                    key={breed.id}
-                    value={String(breed.id)}
+                    key={category.id}
+                    value={String(category.id)}
                   >
-                    {breed.name}
+                    {category.name}
                   </SelectItem>
                 ))}
               </SelectGroup>
@@ -95,4 +124,5 @@ export default function BlogForm() {
           </div>
       </form>
     </div>
+  )
 }
