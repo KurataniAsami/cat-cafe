@@ -54,7 +54,7 @@ export default function BlogForm({
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border border-gray-200 rounded-md px-2 py-0.5 w-[180px]"
+            className="border border-gray-200 rounded-md px-2 py-0.5 w-[280px]"
             placeholder="タイトルを入力してください"
           />
         </div>
@@ -67,7 +67,7 @@ export default function BlogForm({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="本文を入力してください"
-            className="border border-gray-200 rounded-md px-2 py-0.5 w-[180px]"
+            className="border border-gray-200 rounded-md px-2 py-0.5 w-[280px]"
           />
         </div>
 
@@ -79,7 +79,7 @@ export default function BlogForm({
             value={categoryId === null ? "" : String(categoryId)}  
             onValueChange={(value) => setCategoryId(Number(value))}
           >
-            <SelectTrigger className="w-[180px] mt-1">
+            <SelectTrigger className="w-[280px] mt-1">
               <SelectValue>
                 {categoryId !== null
                   ? categories.find((category) => category.id === categoryId)?.name

@@ -25,8 +25,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <nav>
-          <ul className="flex justify-end gap-3 mt-3 mr-3">
+        <nav className="bg-white px-3 py-5">
+          <ul className="flex justify-end gap-7 mt-3 mr-3">
             <Link href="/">ホーム</Link>
             <Link href="/blog">スタッフブログ</Link>
             <Link href="/contact">お問い合わせ</Link>

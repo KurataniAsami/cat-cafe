@@ -4,19 +4,18 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { BlogShowResponse } from "@/app/api/blog/[id]/route"
+import { BlogCategory } from "@/types/cat"
 import {
   Card,
   CardContent,
   CardTitle,
 } from "@/components/ui/card"
-import { BlogCategory } from "@/types/cat"
 
 export default function BlogDetailPage() {
 
   const { id } = useParams<{ id: string }>()
 
   const [blog, setBlog] = useState<BlogShowResponse | null>(null)
-  const [categoryId, setCategoryId] = useState<number | null>(null)
   const [categories, setCategories] = useState<BlogCategory[]>([])
   const [loading, setLoading] = useState(true)
   
@@ -32,7 +31,7 @@ export default function BlogDetailPage() {
       getBlogDetail()
     },[])
 
-    // カテゴリー表示
+    // 記事のカテゴリー表示
     useEffect(() => {
     const getCategories = async () => {
       const res = await fetch(`/api/admin/blog/category`)
@@ -44,6 +43,8 @@ export default function BlogDetailPage() {
     getCategories()
   },[])
 
+  // サイドバーの
+
     if (loading) return <p>loading</p>
     if (!blog) return <p>記事が見つかりません</p>
   
@@ -52,15 +53,17 @@ export default function BlogDetailPage() {
         <ul className="flex justify-center mt-5">
           <li>
             <div className="flex-flex-col">
-              <div>
+              
+
+              <Card className="w-[400px] text-left flex-col  rounded-2xl p-4 bg-white font-bold">
+                <div className="text-right bg-green-400 self-end py-1 px-2 rounded-md">
                 {blog.catBlogCategory ? (
                   <span>{blog.catBlogCategory.name}</span>
                 ) : (
                   <span>カテゴリー未選択</span>
                 )}
               </div>
-
-              <Card className="w-[400px] text-left flex-col  rounded-2xl p-4 bg-white font-bold">
+                
                 <CardTitle className="text-green-500 font-bold">
                   {new Date(blog.createdAt).toLocaleDateString("ja-JP")}
                 </CardTitle>

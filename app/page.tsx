@@ -34,7 +34,6 @@ export default function Home() {
       try {
         const res = await fetch(`/api/admin/breed`)
         const data = await res.json()
-        console.log("breed API:", data)
         setBreeds(data.breeds)
       } catch(error) {
         setError(error instanceof Error ? error.message: '猫の種類のデータが取得できません')

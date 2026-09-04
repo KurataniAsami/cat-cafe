@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card"
 
 export default function BlogPage() {
+
   const [blogs, setBlogs] = useState<BlogList[]>([])
   const [loading, setLoading] = useState(true)
   
@@ -29,12 +30,14 @@ export default function BlogPage() {
     if (!blogs) return <p>記事が見つかりません</p>
   
     return (
-      <ul className="flex justify-center mt-5">
+      <ul className="grid grid-cols-2 max-w-[850px] mx-auto">
         {blogs.map((blog) => (
-          <li key={blog.id}>
+          <li key={blog.id}
+            className="flex justify-center mt-5"
+          >
             <Link href={`/blog/${blog.id}`}>
               <div className="flex-flex-col">
-                <Card className="w-[400px] text-left flex-col  rounded-2xl p-4 bg-white font-bold">
+                <Card className="w-[400px] text-left flex-col rounded-2xl p-4 bg-white font-bold">
                   <CardTitle className="text-green-500 font-bold">
                     {new Date(blog.createdAt).toLocaleDateString("ja-JP")}
                   </CardTitle>

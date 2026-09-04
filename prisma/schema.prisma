@@ -43,6 +43,7 @@ model CatBlog {
 model CatBlogCategory {
   id        Int       @id @default(autoincrement())
   name      String
+  slug      String?   @unique
   catBlog   CatBlog[]
 }
 

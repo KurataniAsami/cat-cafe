@@ -1,11 +1,10 @@
 'use client'
 
-import { CreateBlogRequestBody } from "@/app/api/admin/blog/route"
-import { CatBlogIndexResponse } from "@/app/api/blog/route"
-import BlogForm from "@/app/components/BlogForm"
-import { BlogCategory } from "@/types/cat"
-import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { CreateBlogRequestBody } from "@/app/api/admin/blog/route"
+import { BlogCategory } from "@/types/cat"
+import BlogForm from "@/app/components/BlogForm"
 
 export default function BlogCreatePage() {
 
@@ -73,7 +72,7 @@ export default function BlogCreatePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">新規記事投稿</h1>
+      <h1 className="text-2xl font-bold mb-4 mt-10 text-center">新規記事投稿</h1>
       <BlogForm
         onCreateSubmit={handleCreateSubmit}
         title={title}
