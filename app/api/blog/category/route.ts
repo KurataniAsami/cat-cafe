@@ -1,22 +1,22 @@
 import { prisma } from "@/libs/prisma"
 import { NextRequest, NextResponse } from "next/server"
 
-// typesに格納
-export type BlogCategoryIndexResponse = {
-  categories: {
+export type CatBlogIndexResponse = {
+  id: number
+  title: string
+  content: string
+  thumbnailImageKey: string
+  createdAt: Date
+
+  catBlogCategory: {
     id: number
     name: string
-  }[]
+  }
 }
 
 export const GET = async (request: NextRequest) => {
   try {
-    // await prisma.catBlogCategoryはモデル名とリンクさせる
     const categories = await prisma.catBlogCategory.findMany({
-      select: {
-        id: true,
-        name: true
-      },
       orderBy: {
         id: 'desc'
       }
@@ -28,5 +28,3 @@ export const GET = async (request: NextRequest) => {
       return NextResponse.json({ message: error.message }, { status: 400 })
   }
 }
-
-// GETはadminじゃなくて一般の方のみ

@@ -50,6 +50,7 @@ export type BlogIndexResponse = {
 export type BlogCategory = {
   id: number
   name: string
+  slug: string
 }
 
 export type BlogCategoryIndexResponse = {
