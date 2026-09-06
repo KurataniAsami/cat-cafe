@@ -1,7 +1,6 @@
 import { prisma } from "@/libs/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export const GET = async (
   request: NextRequest,
   { params }: {params: Promise<{ slug: string }>}
@@ -14,8 +13,19 @@ export const GET = async (
         slug
       },
       include: {
-        catBlog: true   // リレーション名から
-      }
+        catBlog: {  // リレーション名から
+          include: {
+            catBlogCategory: true
+          }
+        },
+
+        // 記事数のカウント
+        _count: {
+          select: {
+            catBlog: true
+          }
+        }
+      },
     })
 
     return NextResponse.json({ catBlogCategory }, { status: 200 })

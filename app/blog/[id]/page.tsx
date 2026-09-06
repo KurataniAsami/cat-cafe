@@ -93,7 +93,9 @@ export default function BlogDetailPage() {
           <aside>
             <Card>
               <CardContent>
-                <CategorySidebar categories={categories} />
+                <CategorySidebar
+                  categories={categories}
+                />
               </CardContent>
             </Card>
             

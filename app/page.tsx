@@ -3,22 +3,25 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import BlogPage from "./components/BlogList";
-import { Breed, CatList } from "@/types/cat";
+import BlogPage from "./components/BlogCard";
+import { BlogList, Breed, CatList } from "@/types/cat";
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
+import BlogCard from "./components/BlogCard";
 
 
 
 export default function Home() {
   const [cats, setCats] = useState<CatList[]>([])
+  const [blogs, setBlogs] = useState<BlogList[]>([])
   const [breeds, setBreeds] = useState<Breed[]>([])
 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  // ねこ一覧取得
   useEffect(() => {
     const getAllCats = async () => {
       const res = await fetch(`/api/cat`)
@@ -29,6 +32,7 @@ export default function Home() {
     getAllCats()
   },[])
 
+  // 描種の取得
   useEffect(() => {
     const fetchBreeds = async () => {
       try {
@@ -44,6 +48,18 @@ export default function Home() {
 
     fetchBreeds()
   },[])
+
+  // ブログ記事の取得
+  useEffect(() => {
+    const getAllBlogs = async () => {
+      const res = await fetch(`/api/blog`)
+      const data = await res.json()
+
+      setBlogs(data.blogs)
+    }
+
+    getAllBlogs()
+  }, [])
 
   return (
     <div>
@@ -94,7 +110,15 @@ export default function Home() {
         <h1 className="text-center mt-10 text-2xl">スタッフブログ</h1>
         <p className="text-center mt-3">猫たちの日常やカフェの最新情報をお届けします</p>
         {/* <CatBlogList limit={3} /> */}
-        <BlogPage/>
+        <ul className="grid grid-cols-2 max-w-[850px] mx-auto">
+          {blogs.map((blog) => (
+            <li key={blog.id}
+              className="flex justify-center mt-5"
+            >
+              <BlogCard blog={blog}/>
+            </li>
+          ))}
+        </ul>
       </section>
     </div>
   );

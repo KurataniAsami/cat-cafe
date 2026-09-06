@@ -51,6 +51,9 @@ export type BlogCategory = {
   id: number
   name: string
   slug: string
+   _count: {
+    catBlog: number
+  }
 }
 
 export type BlogCategoryIndexResponse = {

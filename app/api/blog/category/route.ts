@@ -17,6 +17,13 @@ export type CatBlogIndexResponse = {
 export const GET = async (request: NextRequest) => {
   try {
     const categories = await prisma.catBlogCategory.findMany({
+      include: {
+        _count: {
+          select: {
+            catBlog: true
+          },
+        },
+      },
       orderBy: {
         id: 'desc'
       }

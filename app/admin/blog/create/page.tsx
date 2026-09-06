@@ -61,7 +61,7 @@ export default function BlogCreatePage() {
   // カテゴリーのセレクト部分の表示(DBに手動でデータ入れてから)
   useEffect(() => {
     const getCategories = async () => {
-      const res = await fetch(`/api/admin/blog/category`)
+      const res = await fetch(`/api/blog/category`)
       const data = await res.json()
 
       setCategories(data.categories)
