@@ -12,21 +12,24 @@ import { BlogCategory } from "@/types/cat"
 import { Dispatch, SetStateAction } from "react"
 
 type createBlogProps = {
-  onCreateSubmit: (e: { preventDefault: () => void; }) => Promise<void>
+  // createとeditを mode + onSubmitで統一
+  onSubmit: (e: { preventDefault: () => void; }) => Promise<void>
+  mode: "create" | "edit"
   title: string
   setTitle: Dispatch<SetStateAction<string>>
   content: string
   setContent: Dispatch<SetStateAction<string>>
-  thumbnailImageKey: string | null
-  setThumbnailImageKey: Dispatch<SetStateAction<string | null>>
+  thumbnailImageKey: string
+  setThumbnailImageKey: Dispatch<SetStateAction<string>>
   categoryId: number | null
   setCategoryId: Dispatch<SetStateAction<number | null>>
   categories: BlogCategory[]
   setCategories: Dispatch<SetStateAction<BlogCategory[]>>
+  
 }
 
 export default function BlogForm({
-  onCreateSubmit,
+  onSubmit,
   title,
   setTitle,
   content,
@@ -36,14 +39,15 @@ export default function BlogForm({
   categoryId,
   setCategoryId,
   categories,
-  setCategories
+  setCategories,
+  mode
 }:createBlogProps) {
 
   return (
   <div className="flex flex-col items-center mt-5 py-3">
       <h1 className="text-2xl">記事の作成</h1>
       <form
-        onSubmit={onCreateSubmit}
+        onSubmit={onSubmit}
         className="mt-3"
       >
         <div className="flex flex-col">
@@ -116,10 +120,10 @@ export default function BlogForm({
           /> */}
 
           <button
-            type="submit"
+            onClick={onSubmit}
             className="bg-orange-400 text-white rounded-3xl font-bold px-4 py-2 mt-3"
           >
-            作成する
+            {mode === "edit" ? "更新する" : "作成する"}
           </button>
           </div>
       </form>

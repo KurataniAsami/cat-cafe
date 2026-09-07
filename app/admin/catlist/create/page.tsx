@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Breed } from "@/types/cat"
+import BlogForm from "@/app/components/BlogForm"
 
 export default function CreateCatPage() {
   const router = useRouter()

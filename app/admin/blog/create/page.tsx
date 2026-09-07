@@ -12,7 +12,7 @@ export default function BlogCreatePage() {
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null)
+  const [thumbnailImageKey, setThumbnailImageKey] = useState<string>("")
   // const [ImageUrl, setImageUrl] = useState<string | null>(null)
 
   const [categoryId, setCategoryId] = useState<number | null>(null)
@@ -50,7 +50,7 @@ export default function BlogCreatePage() {
         throw new Error(data.error)
       }
 
-      router.push('/admin')
+      router.push('/admin/blog')
     } catch(error) {
       setError(error instanceof Error ? error.message: '記事を作成できませんでした')
     } finally {
@@ -74,7 +74,8 @@ export default function BlogCreatePage() {
     <div>
       <h1 className="text-2xl font-bold mb-4 mt-10 text-center">新規記事投稿</h1>
       <BlogForm
-        onCreateSubmit={handleCreateSubmit}
+        onSubmit={handleCreateSubmit}
+        mode="create"
         title={title}
         setTitle={setTitle}
         content={content}

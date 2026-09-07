@@ -5,12 +5,12 @@ import Link from "next/link"
 import { useParams } from "next/navigation"
 import { BlogShowResponse } from "@/app/api/blog/[id]/route"
 import { BlogCategory } from "@/types/cat"
+import CategorySidebar from "@/app/components/CategorySidebar"
 import {
   Card,
   CardContent,
   CardTitle,
 } from "@/components/ui/card"
-import CategorySidebar from "@/app/components/CategorySidebar"
 
 export default function BlogDetailPage() {
 

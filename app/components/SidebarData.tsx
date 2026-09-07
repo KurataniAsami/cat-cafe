@@ -2,9 +2,9 @@
 
 export const SidebarData = [
   {
-    title: "HOME",
+    title: "管理画面TOP",
     icon: "",
-    link: "/"
+    link: "/admin"
   },
   {
     title: "猫リスト追加",

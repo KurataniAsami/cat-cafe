@@ -1,10 +1,16 @@
 'use client'
 
-import BlogCard from "@/app/components/BlogCard"
-import { BlogCategory, BlogList } from "@/types/cat"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { BlogCategory, BlogList } from "@/types/cat"
+import BlogCard from "@/app/components/BlogCard"
+import CategorySidebar from "@/app/components/CategorySidebar"
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card"
+
 
 export default function CategorySlugPage() {
   const { slug } = useParams<{ slug: string}>()
@@ -71,14 +77,27 @@ export default function CategorySlugPage() {
         </div>
       </div>
 
-      <div className="flex gap-5 mx-5 mt-10">
-        {blogs.map((blog) => (
-          <BlogCard
-            key={blog.id}
-            blog={blog}
-          />
-        ))}
+      <div className="flex items-cente gap-5 mt-10">
+        <main className="grid grid-cols-2 gap-5 mx-5">
+          {blogs.map((blog) => (
+            <BlogCard
+              key={blog.id}
+              blog={blog}
+            />
+          ))}
+        </main>
+
+        <aside>
+          <Card>
+            <CardContent>
+              <CategorySidebar
+                categories={categories}
+              />
+            </CardContent>
+          </Card>
+          </aside>
       </div>
+      
     </>
   )
 }

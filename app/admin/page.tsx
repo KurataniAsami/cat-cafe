@@ -43,8 +43,6 @@ export default function AdminHome() {
         },
       })
 
-      const data = await res.json()
-
       setIsDeleteOpen(false)
 
       // stateから削除した猫(deleteIdと同じid)を取り除く
