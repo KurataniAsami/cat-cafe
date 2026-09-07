@@ -43,3 +43,39 @@ export const PUT = async (
       return NextResponse.json({ message: error.message }, { status: 400 })
   }
 }
+
+// DELETE
+export const DELETE = async (
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }>},
+) => {
+  const { id } = await params
+
+  // 対象のidの投稿を取得
+  try {
+    const catBlog = await prisma.catBlog.findUnique({
+      where: {
+        id: parseInt(id),
+      }
+    })
+
+    if(!catBlog) {
+      return NextResponse.json(
+        { message: '記事が見つかりません'},
+        { status: 404 }
+      )
+    }
+
+    await prisma.catBlog.delete({
+      where: {
+        id: parseInt(id)
+      }
+    })
+
+    return NextResponse.json({ message: '削除成功'}, { status: 200 })
+  } catch(error) {
+    // console.error("ブログ削除エラー:", error)
+    if(error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 400 })
+  }
+}

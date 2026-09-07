@@ -10,9 +10,10 @@ import {
   Dialog,
   DialogContent,
 } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import DeleteModal from "@/app/components/DeleteModal"
 
 export default function AdminBlogPage() {
-
   const router = useRouter()
 
   const [blogs, setBlogs] = useState<BlogList[]>([])
@@ -23,9 +24,11 @@ export default function AdminBlogPage() {
 
   // 編集対象の記事のidを保存する
   const [editBlogId, setEditBlogId] = useState<number | null>(null)
+  const [deleteId, setDeleteId] = useState<number | null>(null)
 
   // modal
   const [EditDialogOpen, setEditDialogOpen] = useState(false)
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
   const [categoryId, setCategoryId] = useState<number | null>(null)
   const [categories, setCategories] = useState<BlogCategory[]>([])
@@ -124,6 +127,43 @@ export default function AdminBlogPage() {
     ChengeBlog()
   },[editBlogId])
 
+  // delete
+  const handleDeleteClick = (id: number) => {
+    setDeleteId(id)
+    setIsDeleteOpen(true)
+  }
+
+  const handleDelete = async () => {
+    if(deleteId === null) return
+
+    try {
+      const res = await fetch(`/api/admin/blog/${deleteId}`, {
+        method: 'DELETE',
+      })
+
+      console.log("DELETE status:", res.status)
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.message)
+      }
+
+      // stateから削除したブログ(deleteIdと同じid)を取り除く
+      //  setBlogs((prevBlogs) =>
+      //   prevBlogs.filter((item) => item.id !== deleteId)
+      // )でも動く
+      setBlogs((prevBlogs) =>
+        prevBlogs.filter((blog) => blog.id !== deleteId)
+      )
+
+      setIsDeleteOpen(false)
+      setDeleteId(null)
+
+    } catch(error) {
+      setError(error instanceof Error ? error.message: '記事を削除できませんでした')
+    }
+  }
+
   return (
     <div className="mt-5">
       <h1 className="text-center">過去の投稿</h1>
@@ -154,31 +194,47 @@ export default function AdminBlogPage() {
               >
                 編集
               </button>
+
+              <Button
+                onClick={() => handleDeleteClick(blog.id)}
+                variant="outline"
+                className="self-start bg-red-600 text-white"  
+              >
+                削除
+              </Button>
             </li>
           ))}
         </ul>
 
-          <Dialog
-            open={EditDialogOpen}
-            onOpenChange={setEditDialogOpen}
-            >
-            <DialogContent>
-              <BlogForm
-                onSubmit={handleEditSubmit}
-                mode="edit"
-                title={title}
-                setTitle={setTitle}
-                content={content}
-                setContent={setContent}
-                thumbnailImageKey={thumbnailImageKey}
-                setThumbnailImageKey={setThumbnailImageKey}
-                categoryId={categoryId}
-                setCategoryId={setCategoryId}
-                categories={categories}
-                setCategories={setCategories}
-              />
-            </DialogContent>
-          </Dialog>
+        {/* edit */}
+        <Dialog
+          open={EditDialogOpen}
+          onOpenChange={setEditDialogOpen}
+          >
+          <DialogContent>
+            <BlogForm
+              onSubmit={handleEditSubmit}
+              mode="edit"
+              title={title}
+              setTitle={setTitle}
+              content={content}
+              setContent={setContent}
+              thumbnailImageKey={thumbnailImageKey}
+              setThumbnailImageKey={setThumbnailImageKey}
+              categoryId={categoryId}
+              setCategoryId={setCategoryId}
+              categories={categories}
+              setCategories={setCategories}
+            />
+          </DialogContent>
+        </Dialog>
+
+        {/* delete */}
+        <DeleteModal
+          isOpen={isDeleteOpen}
+          onDelete={handleDelete}
+          onClose={() => setIsDeleteOpen(false)}
+        />
       </div>
     </div>
   )
