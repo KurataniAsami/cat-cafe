@@ -10,6 +10,10 @@ import {
 } from "@/components/ui/select"
 import { BlogCategory } from "@/types/cat"
 import { ChangeEvent, Dispatch, SetStateAction } from "react"
+import LocalSeeIcon from '@mui/icons-material/LocalSee';
+import { BlogThumbnail } from "./BlogThumbnail";
+import ClearIcon from '@mui/icons-material/Clear';
+import { supabase } from "@/libs/supabase";
 
 type createBlogProps = {
   // createとeditを mode + onSubmitで統一
@@ -28,6 +32,7 @@ type createBlogProps = {
   ImageUrl: string | null
   setImageUrl: Dispatch<SetStateAction<string | null>>
   handleBlogImageUpload: (post: ChangeEvent<HTMLInputElement, Element>) => Promise<void>
+  handleRemoveImage: () => Promise<void>
 }
 
 export default function BlogForm({
@@ -45,7 +50,8 @@ export default function BlogForm({
   mode,
   ImageUrl,
   setImageUrl,
-  handleBlogImageUpload
+  handleBlogImageUpload,
+  handleRemoveImage
 }:createBlogProps) {
 
   return (
@@ -63,7 +69,7 @@ export default function BlogForm({
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border border-gray-200 rounded-md px-2 py-0.5 w-[280px]"
+            className="border border-gray-200 rounded-md px-2 py-0.5 w-[300px]"
             placeholder="タイトルを入力してください"
           />
         </div>
@@ -76,7 +82,7 @@ export default function BlogForm({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="本文を入力してください"
-            className="border border-gray-200 rounded-md px-2 py-0.5 w-[280px]"
+            className="border border-gray-200 rounded-md px-2 py-0.5 w-[300px]"
           />
         </div>
 
@@ -88,7 +94,7 @@ export default function BlogForm({
             value={categoryId === null ? "" : String(categoryId)}  
             onValueChange={(value) => setCategoryId(Number(value))}
           >
-            <SelectTrigger className="w-[280px] mt-1">
+            <SelectTrigger className="w-[300px] mt-1">
               <SelectValue>
                 {categoryId !== null
                   ? categories.find((category) => category.id === categoryId)?.name
@@ -109,19 +115,41 @@ export default function BlogForm({
               </SelectGroup>
             </SelectContent>
           </Select>
+
+          <div className="mt-3 flex gap-2 justify-between">
+            <div>
+              <label htmlFor="ImageKey"
+                className="flex gap-2 items-center cursor-pointer"
+              >
+                画像
+                <div className="mb-0.5">
+                  <LocalSeeIcon/>
+                </div>
+              </label>
+              
+              <input
+                type="file"
+                id="ImageKey"
+                onChange={handleBlogImageUpload}
+                className="sr-only"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={handleRemoveImage}
+            >
+              <ClearIcon/>
+            </button>
+          </div>
+
+          {/* 画像プレビュー */}
+          <BlogThumbnail
+            thumbnailImageKey={thumbnailImageKey}
+          />
         </div>
 
-        <div className="flex justify-between items-center mt-2 pt-4">
-          <label htmlFor="ImageKey">
-            画像
-          </label>
-          <input
-            type="file"
-            id="ImageKey"
-            onChange={handleBlogImageUpload}
-            className="sr-only"
-          />
-
+        <div className="flex justify-center items-center mt-2 pt-4">
           <button
             onClick={onSubmit}
             className="bg-orange-400 text-white rounded-3xl font-bold px-4 py-2 mt-3"

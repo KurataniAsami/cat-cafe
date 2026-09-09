@@ -166,6 +166,23 @@ export default function AdminBlogPage() {
       setImageUrl(publicUrl)
   }
 
+  // 画像キャンセル
+  const handleRemoveImage = async () => {
+    if(!thumbnailImageKey) return
+
+    const { error } = await supabase.storage
+      .from('catBlog_image')
+      .remove([thumbnailImageKey])
+
+    if(error) {
+      setError(error.message)
+      return
+    }
+
+    setThumbnailImageKey(null)
+    setImageUrl(null)
+  }
+
   // delete
   const handleDeleteClick = (id: number) => {
     setDeleteId(id)
@@ -267,6 +284,7 @@ export default function AdminBlogPage() {
               setCategoryId={setCategoryId}
               categories={categories}
               setCategories={setCategories}
+              handleRemoveImage={handleRemoveImage}
             />
           </DialogContent>
         </Dialog>

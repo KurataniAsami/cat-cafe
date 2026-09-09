@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card"
 import Image from "next/image"
 import { supabase } from "@/libs/supabase"
+import { BlogThumbnail } from "@/app/components/BlogThumbnail"
 
 export default function BlogDetailPage() {
 
@@ -86,22 +87,9 @@ export default function BlogDetailPage() {
                 {blog.content}
               </div>
 
-              {blog?.thumbnailImageKey && (
-                <div>
-                  <Image
-                    src={
-                      supabase.storage
-                        .from('catBlog_image')
-                        .getPublicUrl(blog.thumbnailImageKey)
-                        .data.publicUrl
-                    }
-                    alt="thumbnail"
-                    width={300}
-                    height={400}
-                    className="rounded-xl"
-                  />
-                </div>
-              )}
+              <BlogThumbnail
+                thumbnailImageKey={blog?.thumbnailImageKey}
+              />
 
               <Link href="/#blog" className="flex gap-3 text-orange-400">
                 <span>← </span>

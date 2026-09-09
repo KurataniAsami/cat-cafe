@@ -116,6 +116,23 @@ export default function BlogCreatePage() {
       setImageUrl(publicUrl)
   }
 
+  // 画像キャンセル
+  const handleRemoveImage = async () => {
+    if(!thumbnailImageKey) return
+
+    const { error } = await supabase.storage
+      .from('catBlog_image')
+      .remove([thumbnailImageKey])
+
+    if(error) {
+      setError(error.message)
+      return
+    }
+
+    setThumbnailImageKey(null)
+    setImageUrl(null)
+  }
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4 mt-10 text-center">新規記事投稿</h1>
@@ -135,6 +152,7 @@ export default function BlogCreatePage() {
         setCategoryId={setCategoryId}
         categories={categories}
         setCategories={setCategories}
+        handleRemoveImage={handleRemoveImage}
       />
     </div>
   )
