@@ -1,17 +1,20 @@
-// ブログ管理 一覧 edit delete
+// ブログ管理 一覧ページ
 'use client'
 
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { v4 as uuidv4 } from 'uuid'
 import { UpdateBlogRequestBody } from "@/app/api/admin/blog/[id]/route"
 import { BlogCategory, BlogList } from "@/types/cat"
 import BlogForm from "@/app/components/BlogForm"
+import DeleteModal from "@/app/components/DeleteModal"
 import {
   Dialog,
   DialogContent,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import DeleteModal from "@/app/components/DeleteModal"
+import Link from "next/link"
+import { supabase } from "@/libs/supabase"
 
 export default function AdminBlogPage() {
   const router = useRouter()
@@ -19,8 +22,8 @@ export default function AdminBlogPage() {
   const [blogs, setBlogs] = useState<BlogList[]>([])
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [thumbnailImageKey, setThumbnailImageKey] = useState<string>("")
-  // const [thumbnailImageUrl, setThumbnailImageUrl] = useState<string | null>(null)
+  const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null)
+  const [ImageUrl, setImageUrl] = useState<string | null>(null)
 
   // 編集対象の記事のidを保存する
   const [editBlogId, setEditBlogId] = useState<number | null>(null)
@@ -127,6 +130,42 @@ export default function AdminBlogPage() {
     ChengeBlog()
   },[editBlogId])
 
+  // 画像更新
+  const handleBlogImageUpload = async (
+    event: ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
+    if(!event.target.files || event.target.files.length === 0 ) {
+      return
+    }
+
+    const file = event.target.files[0]
+
+    const filePath = `private/${uuidv4()}`
+
+    // 画像を表示するためのURLを生成
+    const { data, error } = await supabase.storage
+      .from('catBlog_image')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
+
+      if(error) {
+        setError(error.message)
+        return
+      }
+
+      setThumbnailImageKey(data.path)
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage
+      .from('catBlog_image')
+      .getPublicUrl(data.path)
+
+      setImageUrl(publicUrl)
+  }
+
   // delete
   const handleDeleteClick = (id: number) => {
     setDeleteId(id)
@@ -140,8 +179,6 @@ export default function AdminBlogPage() {
       const res = await fetch(`/api/admin/blog/${deleteId}`, {
         method: 'DELETE',
       })
-
-      console.log("DELETE status:", res.status)
 
       if (!res.ok) {
         const data = await res.json()
@@ -175,15 +212,17 @@ export default function AdminBlogPage() {
               key={blog.id}
               className="flex items-center justify-center gap-5 mt-5"
             >
-              <div className="flex gap-5">
-                <div className="w-[120px]">
-                  {blog.title}
-                </div>
+              <Link href={`/blog/${blog.id}`}>
+                <div className="flex gap-5">
+                  <div className="w-[120px]">
+                    {blog.title}
+                  </div>
 
-                <div>
-                  {new Date(blog.createdAt).toLocaleDateString("ja-JP")}
+                  <div>
+                    {new Date(blog.createdAt).toLocaleDateString("ja-JP")}
+                  </div>
                 </div>
-              </div>
+              </Link>
 
               <button
                 type="button"
@@ -221,6 +260,9 @@ export default function AdminBlogPage() {
               setContent={setContent}
               thumbnailImageKey={thumbnailImageKey}
               setThumbnailImageKey={setThumbnailImageKey}
+              ImageUrl={ImageUrl}
+              setImageUrl={setImageUrl}
+              handleBlogImageUpload={handleBlogImageUpload}
               categoryId={categoryId}
               setCategoryId={setCategoryId}
               categories={categories}

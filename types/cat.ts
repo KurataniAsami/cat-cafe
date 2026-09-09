@@ -4,7 +4,7 @@ export type CatList = {
   name: string
   sex: string
   birthday: string
-  ImageKey: string | null
+  CatImageKey: string | null
 
   breed: {
     id: number

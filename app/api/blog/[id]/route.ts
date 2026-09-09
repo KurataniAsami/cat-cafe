@@ -5,7 +5,8 @@ export type BlogShowResponse = {
   id: number
   title: string
   content: string
-  thumbnailImageKey: string
+  thumbnailImageKey: string | null
+  ImageUrl: string | null
   createdAt: Date
   categoryId: number
 

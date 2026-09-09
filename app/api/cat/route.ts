@@ -14,7 +14,7 @@ export const GET = async (request: NextRequest) => {
         name: true,
         sex: true,
         birthday: true,
-        ImageKey: true,
+        CatImageKey: true,
 
         breed: {
           select: {

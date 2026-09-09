@@ -5,8 +5,8 @@ export type UpdateBlogRequestBody = {
   title: string
   content: string
   categoryId: number | null
-  thumbnailImageUrl?: string
-  thumbnailImageKey?: string
+  thumbnailImageUrl?: string | null
+  thumbnailImageKey?: string | null
 }
 
 export const PUT = async (

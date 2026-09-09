@@ -5,7 +5,7 @@ export type CatBlogIndexResponse = {
   id: number
   title: string
   content: string
-  thumbnailImageKey: string
+  thumbnailImageKey?: string | null
   createdAt: Date
 
   catBlogCategory: {

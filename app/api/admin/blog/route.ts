@@ -7,6 +7,7 @@ export type CreateBlogRequestBody = {
   content: string
   categoryId: number | null  // 必須項目にしない場合
   thumbnailImageKey?: string | null
+  ImageUrl?: string | null
 }
 
 // レスポンス（返す型）

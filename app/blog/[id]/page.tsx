@@ -11,6 +11,8 @@ import {
   CardContent,
   CardTitle,
 } from "@/components/ui/card"
+import Image from "next/image"
+import { supabase } from "@/libs/supabase"
 
 export default function BlogDetailPage() {
 
@@ -18,6 +20,8 @@ export default function BlogDetailPage() {
 
   const [blog, setBlog] = useState<BlogShowResponse | null>(null)
   const [categories, setCategories] = useState<BlogCategory[]>([])
+  const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null)
+  const [ImageUrl, setImageUrl] = useState<string | null>(null)
   const [slug, setSlug] = useState("")
   const [loading, setLoading] = useState(true)
   
@@ -45,23 +49,22 @@ export default function BlogDetailPage() {
       getCategorieTag()
     },[])
 
-    // サイドバーでのカテゴリー表示
-    useEffect(() => {
-      const getCategoryBySlug = async () => {
-        const res = await fetch(`/api/blog/category`)
-        const data = await res.json()
+    // 画像表示
+    if (!blog || !blog.thumbnailImageKey) {
+      return
+    }
 
-        setSlug(data.categories)
-      }
-      
-      getCategoryBySlug()
-    },[slug])
+    const {
+      data: { publicUrl },
+      } = supabase.storage
+      .from('catBlog_image')
+      .getPublicUrl(blog.thumbnailImageKey)
 
     if (loading) return <p>loading</p>
     if (!blog) return <p>記事が見つかりません</p>
-  
+
     return (
-      <div>
+      <div className="mb-5">
         <div className="flex justify-around mt-5">
           <main className="flex-flex-col">
             <Card className="w-[400px] text-left flex-col  rounded-2xl p-4 bg-white font-bold">
@@ -82,6 +85,23 @@ export default function BlogDetailPage() {
               <div className="text-gray-500">
                 {blog.content}
               </div>
+
+              {blog?.thumbnailImageKey && (
+                <div>
+                  <Image
+                    src={
+                      supabase.storage
+                        .from('catBlog_image')
+                        .getPublicUrl(blog.thumbnailImageKey)
+                        .data.publicUrl
+                    }
+                    alt="thumbnail"
+                    width={300}
+                    height={400}
+                    className="rounded-xl"
+                  />
+                </div>
+              )}
 
               <Link href="/#blog" className="flex gap-3 text-orange-400">
                 <span>← </span>

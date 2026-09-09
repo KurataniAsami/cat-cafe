@@ -2,16 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import BlogPage from "./components/BlogCard";
 import { BlogList, Breed, CatList } from "@/types/cat";
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
 import BlogCard from "./components/BlogCard";
-
-
 
 export default function Home() {
   const [cats, setCats] = useState<CatList[]>([])

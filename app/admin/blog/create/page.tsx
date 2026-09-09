@@ -1,19 +1,22 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { v4 as uuidv4 } from 'uuid'
 import { CreateBlogRequestBody } from "@/app/api/admin/blog/route"
-import { BlogCategory } from "@/types/cat"
+import { BlogCategory, BlogList } from "@/types/cat"
 import BlogForm from "@/app/components/BlogForm"
+import { supabase } from "@/libs/supabase"
 
 export default function BlogCreatePage() {
 
   const router = useRouter()
 
+  const [blogs, setBlogs] = useState<BlogList[]>([])
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [thumbnailImageKey, setThumbnailImageKey] = useState<string>("")
-  // const [ImageUrl, setImageUrl] = useState<string | null>(null)
+  const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null)
+  const [ImageUrl, setImageUrl] = useState<string | null>(null)
 
   const [categoryId, setCategoryId] = useState<number | null>(null)
   const [categories, setCategories] = useState<BlogCategory[]>([])
@@ -70,6 +73,49 @@ export default function BlogCreatePage() {
     getCategories()
   },[])
 
+  // アップロードした画像を表示
+  // キーだけDBに保存され表示する時にURLをsupabaseが作成する
+  // << -- 作成時
+  const handleBlogImageUpload = async (
+    event: ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
+    if(!event.target.files || event.target.files.length === 0 ) {
+      return
+    }
+
+    const file = event.target.files[0]
+
+    const filePath = `private/${uuidv4()}`
+
+    // 画像を表示するためのURLを生成
+    const { data, error } = await supabase.storage
+      .from('catBlog_image')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
+
+      if(error) {
+        console.error("Storage Error:", error)
+        setError(error.message)
+        return
+      }
+
+      setThumbnailImageKey(data.path)
+
+      //  -- >>
+
+      // 表示
+      // 画像表示の時にDBから取得したキーをわたす
+      const {
+        data: { publicUrl },
+      } = supabase.storage
+      .from('catBlog_image')
+      .getPublicUrl(data.path)
+
+      setImageUrl(publicUrl)
+  }
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4 mt-10 text-center">新規記事投稿</h1>
@@ -82,6 +128,9 @@ export default function BlogCreatePage() {
         setContent={setContent}
         thumbnailImageKey={thumbnailImageKey}
         setThumbnailImageKey={setThumbnailImageKey}
+        ImageUrl={ImageUrl}
+        setImageUrl={setImageUrl}
+        handleBlogImageUpload={handleBlogImageUpload}
         categoryId={categoryId}
         setCategoryId={setCategoryId}
         categories={categories}
@@ -91,7 +140,4 @@ export default function BlogCreatePage() {
   )
 }
 
-{/* <Select
-  value={String(categoryId)}
-  onValueChange={(value) => setCategoryId(Number(value))}
-></Select> */}
+// npm install uuid

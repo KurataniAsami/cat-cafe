@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { BlogCategory } from "@/types/cat"
-import { Dispatch, SetStateAction } from "react"
+import { ChangeEvent, Dispatch, SetStateAction } from "react"
 
 type createBlogProps = {
   // createとeditを mode + onSubmitで統一
@@ -19,13 +19,15 @@ type createBlogProps = {
   setTitle: Dispatch<SetStateAction<string>>
   content: string
   setContent: Dispatch<SetStateAction<string>>
-  thumbnailImageKey: string
-  setThumbnailImageKey: Dispatch<SetStateAction<string>>
+  thumbnailImageKey: string | null
+  setThumbnailImageKey: Dispatch<SetStateAction<string | null>>
   categoryId: number | null
   setCategoryId: Dispatch<SetStateAction<number | null>>
   categories: BlogCategory[]
   setCategories: Dispatch<SetStateAction<BlogCategory[]>>
-  
+  ImageUrl: string | null
+  setImageUrl: Dispatch<SetStateAction<string | null>>
+  handleBlogImageUpload: (post: ChangeEvent<HTMLInputElement, Element>) => Promise<void>
 }
 
 export default function BlogForm({
@@ -40,7 +42,10 @@ export default function BlogForm({
   setCategoryId,
   categories,
   setCategories,
-  mode
+  mode,
+  ImageUrl,
+  setImageUrl,
+  handleBlogImageUpload
 }:createBlogProps) {
 
   return (
@@ -106,18 +111,16 @@ export default function BlogForm({
           </Select>
         </div>
 
-        
-
         <div className="flex justify-between items-center mt-2 pt-4">
-          {/* <label htmlFor="ImageKey">
-            <ImageIcon/>
+          <label htmlFor="ImageKey">
+            画像
           </label>
           <input
             type="file"
             id="ImageKey"
-            onChange={handleImageUpload}
+            onChange={handleBlogImageUpload}
             className="sr-only"
-          /> */}
+          />
 
           <button
             onClick={onSubmit}

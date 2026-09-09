@@ -11,8 +11,8 @@ model Cat {
   name      String
   sex       String
   birthday  String
-  ImageKey  String?
-  ImageUrl  String?
+  CatImageKey  String?
+  CatImageUrl  String?
 
   breedId   Int
   breed     Breed  @relation(fields: [breedId], references: [id], onDelete: Cascade)
@@ -33,6 +33,7 @@ model CatBlog {
   title               String
   content             String
   thumbnailImageKey   String?
+  ImageUrl            String?
   createdAt           DateTime @default(now()) @map("created_at")
 
   // カテゴリーは必須にしない
