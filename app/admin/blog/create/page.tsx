@@ -2,17 +2,16 @@
 
 import { ChangeEvent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { supabase } from "@/libs/supabase"
 import { v4 as uuidv4 } from 'uuid'
 import { CreateBlogRequestBody } from "@/app/api/admin/blog/route"
 import { BlogCategory, BlogList } from "@/types/cat"
 import BlogForm from "@/app/components/BlogForm"
-import { supabase } from "@/libs/supabase"
 
 export default function BlogCreatePage() {
 
   const router = useRouter()
 
-  const [blogs, setBlogs] = useState<BlogList[]>([])
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null)

@@ -12,6 +12,7 @@ export const BlogThumbnail = ({
     return null
   }
 
+   // 画像表示
   const {
     data: { publicUrl },
   } = supabase.storage

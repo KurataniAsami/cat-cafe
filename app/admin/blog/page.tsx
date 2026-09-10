@@ -3,6 +3,8 @@
 
 import { ChangeEvent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { supabase } from "@/libs/supabase"
 import { v4 as uuidv4 } from 'uuid'
 import { UpdateBlogRequestBody } from "@/app/api/admin/blog/[id]/route"
 import { BlogCategory, BlogList } from "@/types/cat"
@@ -13,8 +15,6 @@ import {
   DialogContent,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { supabase } from "@/libs/supabase"
 
 export default function AdminBlogPage() {
   const router = useRouter()
@@ -267,7 +267,7 @@ export default function AdminBlogPage() {
           open={EditDialogOpen}
           onOpenChange={setEditDialogOpen}
           >
-          <DialogContent>
+          <DialogContent className="max-h-[80vh] overflow-y-auto">
             <BlogForm
               onSubmit={handleEditSubmit}
               mode="edit"

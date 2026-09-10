@@ -1,5 +1,10 @@
 'use client'
 
+import { ChangeEvent, Dispatch, SetStateAction } from "react"
+import { BlogCategory } from "@/types/cat"
+import { BlogThumbnail } from "./BlogThumbnail";
+import LocalSeeIcon from '@mui/icons-material/LocalSee';
+import ClearIcon from '@mui/icons-material/Clear';
 import {
   Select,
   SelectContent,
@@ -8,12 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { BlogCategory } from "@/types/cat"
-import { ChangeEvent, Dispatch, SetStateAction } from "react"
-import LocalSeeIcon from '@mui/icons-material/LocalSee';
-import { BlogThumbnail } from "./BlogThumbnail";
-import ClearIcon from '@mui/icons-material/Clear';
-import { supabase } from "@/libs/supabase";
 
 type createBlogProps = {
   // createとeditを mode + onSubmitで統一
@@ -42,20 +41,16 @@ export default function BlogForm({
   content,
   setContent,
   thumbnailImageKey,
-  setThumbnailImageKey,
   categoryId,
   setCategoryId,
   categories,
-  setCategories,
   mode,
-  ImageUrl,
-  setImageUrl,
   handleBlogImageUpload,
   handleRemoveImage
 }:createBlogProps) {
 
   return (
-  <div className="flex flex-col items-center mt-5 py-3">
+    <div className="flex flex-col items-center mt-5 py-3">
       <h1 className="text-2xl">記事の作成</h1>
       <form
         onSubmit={onSubmit}
@@ -151,7 +146,7 @@ export default function BlogForm({
 
         <div className="flex justify-center items-center mt-2 pt-4">
           <button
-            onClick={onSubmit}
+            type="submit"
             className="bg-orange-400 text-white rounded-3xl font-bold px-4 py-2 mt-3"
           >
             {mode === "edit" ? "更新する" : "作成する"}

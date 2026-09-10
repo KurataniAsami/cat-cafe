@@ -11,8 +11,6 @@ import {
   CardContent,
   CardTitle,
 } from "@/components/ui/card"
-import Image from "next/image"
-import { supabase } from "@/libs/supabase"
 import { BlogThumbnail } from "@/app/components/BlogThumbnail"
 
 export default function BlogDetailPage() {
@@ -21,9 +19,6 @@ export default function BlogDetailPage() {
 
   const [blog, setBlog] = useState<BlogShowResponse | null>(null)
   const [categories, setCategories] = useState<BlogCategory[]>([])
-  const [thumbnailImageKey, setThumbnailImageKey] = useState<string | null>(null)
-  const [ImageUrl, setImageUrl] = useState<string | null>(null)
-  const [slug, setSlug] = useState("")
   const [loading, setLoading] = useState(true)
   
     useEffect(() => {
@@ -49,17 +44,6 @@ export default function BlogDetailPage() {
 
       getCategorieTag()
     },[])
-
-    // 画像表示
-    if (!blog || !blog.thumbnailImageKey) {
-      return
-    }
-
-    const {
-      data: { publicUrl },
-      } = supabase.storage
-      .from('catBlog_image')
-      .getPublicUrl(blog.thumbnailImageKey)
 
     if (loading) return <p>loading</p>
     if (!blog) return <p>記事が見つかりません</p>
@@ -87,10 +71,12 @@ export default function BlogDetailPage() {
                 {blog.content}
               </div>
 
-              <BlogThumbnail
-                thumbnailImageKey={blog?.thumbnailImageKey}
-              />
-
+              {blog?.thumbnailImageKey && (
+                <BlogThumbnail
+                  thumbnailImageKey={blog.thumbnailImageKey}
+                />
+              )}
+              
               <Link href="/#blog" className="flex gap-3 text-orange-400">
                 <span>← </span>
                 <span>一覧へ戻る</span>

@@ -8,6 +8,7 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import BlogCard from "./components/BlogCard";
+import { CatCard } from "./components/CatCard";
 
 export default function Home() {
   const [cats, setCats] = useState<CatList[]>([])
@@ -61,6 +62,7 @@ export default function Home() {
     <div>
       <h1 className="text-center mt-3">お迎えしている猫たち</h1>
 
+      {/* 描種一覧 */}
       <div className="flex justify-center gap-3 mt-5">
         {breeds.map((breed) => (
           <Link href={`/breed/${breed.slug}`}
@@ -75,32 +77,22 @@ export default function Home() {
         ))}
       </div>
 
+      {/* 猫リスト */}
       <ul className="flex justify-center gap-3 mt-5">
         {cats.map((cat) => {
           return (
             <li
               key={cat.id}
             >
-              <Card>
-                <CardContent className="flex flex-col">
-                  <span className="text-xl font-bold">{cat.name}</span>
-                    <div
-                      // flexの時のボタン幅調整(flexない時はinline-block)
-                      className="self-start bg-green-300 text-black font-bold"  
-                    >
-                      {cat.breed.name}
-                    </div>
-                  <span className="text-orange-400 mt-2">{cat.sex}</span>
-                  <span className="text-gray-600 mt-2">
-                    {new Date(cat.birthday).toLocaleDateString("ja-JP")}生まれ
-                  </span>
-                </CardContent>
-              </Card>
+              <CatCard
+                cat={cat}
+                CatImageKey={cat.CatImageKey}  
+              />
             </li>
           )
         })}
       </ul>
-
+      
       {/* blog */}
       <section id="blog">
         <h1 className="text-center mt-10 text-2xl">スタッフブログ</h1>

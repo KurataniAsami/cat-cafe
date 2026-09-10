@@ -3,16 +3,8 @@
 import { CreateCatRequestBody } from "@/app/api/admin/cats/route"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Breed } from "@/types/cat"
-import BlogForm from "@/app/components/BlogForm"
+import CatListForm from "@/app/components/CatListForm"
 
 export default function CreateCatPage() {
   const router = useRouter()
@@ -84,118 +76,22 @@ export default function CreateCatPage() {
     }
   }
 
-  // 性別のセレクトメニュー
-    const items = [
-      { label: "おとこのこ", value: "おとこのこ" },
-      { label: "おんなのこ", value: "おんなのこ" },
-    ]
-
   return (
     <div className="flex flex-col items-center mt-5 py-3">
       <h1 className="text-2xl">猫の追加</h1>
-      <form
+      
+      <CatListForm
         onSubmit={handleSubmit}
-        className="mt-3"
-      >
-        <div className="flex flex-col">
-          <label>
-            名前
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="border border-gray-200 rounded-md px-2 py-0.5 w-[180px]"
-            placeholder="タマ"
-          />
-        </div>
-
-        <div className="mt-2">
-          <label>
-            性別
-          </label>
-          <Select
-            value={sex}
-            onValueChange={(value) => setSex(value ?? "")}
-          >
-            <SelectTrigger className="w-[180px] mt-1">
-              <SelectValue placeholder="性別を選択" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {items.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="mt-2">
-          <label>
-            種類
-          </label>
-          <Select
-            value={breedId === null ? "" : String(breedId)}  // placeholderを表示させる
-            onValueChange={(value) => setBreedId(Number(value))}
-          >
-            <SelectTrigger className="w-[180px] mt-1">
-              <SelectValue>
-                {breedId === null
-                  ? "品種を選択"
-                  : breeds.find((b) => b.id === breedId)?.name}
-              </SelectValue>
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectGroup>
-                {breeds.map((breed) => (
-                  <SelectItem
-                    key={breed.id}
-                    value={String(breed.id)}
-                  >
-                    {breed.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="mt-3 flex flex-col">
-          <label>
-            誕生日
-          </label>
-          <input
-            type="date"
-            value={birthday}
-            onChange={(e) => setBirthday(e.target.value)}
-            className="border rounded-md border-gray-200 mt-1 px-2 py-0.5
-              text-gray-500 focus:outline-none"
-          />
-        </div>
-
-        <div className="flex justify-between items-center mt-2 pt-4">
-          {/* <label htmlFor="ImageKey">
-            <ImageIcon/>
-          </label>
-          <input
-            type="file"
-            id="ImageKey"
-            onChange={handleImageUpload}
-            className="sr-only"
-          /> */}
-
-          <button
-            type="submit"
-            className="bg-orange-400 text-white rounded-3xl font-bold px-4 py-2 mt-3"
-          >
-            追加する
-          </button>
-        </div>
-      </form>
+        name={name}
+        setName={setName}
+        sex={sex}
+        setSex={setSex}
+        birthday={birthday}
+        setBirthday={setBirthday}
+        breeds={breeds}
+        breedId={breedId}
+        setBreedId={setBreedId}
+      />
     </div>
   )
 }
