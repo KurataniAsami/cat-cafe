@@ -7,7 +7,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Breed } from "@/types/cat"
-import { Dispatch, FormEvent, SetStateAction } from "react"
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react"
+import LocalSeeIcon from '@mui/icons-material/LocalSee';
 
 type CatListFormProps = {
   onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>
@@ -20,6 +21,7 @@ type CatListFormProps = {
   breeds: Breed[]
   breedId: number | null
   setBreedId: Dispatch<SetStateAction<number | null>>
+  handleCatImageUpload: (event: ChangeEvent<HTMLInputElement, Element>) => Promise<void>
 }
 
 export default function CatListForm({
@@ -32,7 +34,8 @@ export default function CatListForm({
   setBirthday,
   breeds,
   breedId,
-  setBreedId
+  setBreedId,
+  handleCatImageUpload
 }:CatListFormProps) {
 
   // 性別のセレクトメニュー
@@ -128,15 +131,22 @@ export default function CatListForm({
         </div>
 
         <div className="flex justify-between items-center mt-2 pt-4">
-          {/* <label htmlFor="ImageKey">
-            <ImageIcon/>
+          <label htmlFor="ImageKey"
+            className="flex gap-2 items-center cursor-pointer"
+          >
+            画像
+            <div className="mb-0.5">
+              <LocalSeeIcon/>
+            </div>
           </label>
+
           <input
             type="file"
             id="ImageKey"
-            onChange={handleImageUpload}
+            onChange={handleCatImageUpload}
             className="sr-only"
-          /> */}
+          />
+
           <button
             type="submit"
             className="bg-orange-400 text-white rounded-3xl font-bold px-4 py-2 mt-3"

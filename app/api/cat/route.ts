@@ -33,3 +33,4 @@ export const GET = async (request: NextRequest) => {
       return NextResponse.json({ message: error.message }, { status: 400 })
   }
 }
+

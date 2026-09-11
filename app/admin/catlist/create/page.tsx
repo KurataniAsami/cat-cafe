@@ -1,10 +1,12 @@
 'use client'
 
-import { CreateCatRequestBody } from "@/app/api/admin/cats/route"
+import { ChangeEvent, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { v4 as uuidv4 } from 'uuid'
+import { CreateCatRequestBody } from "@/app/api/admin/cats/route"
 import { Breed } from "@/types/cat"
 import CatListForm from "@/app/components/CatListForm"
+import { supabase } from "@/libs/supabase"
 
 export default function CreateCatPage() {
   const router = useRouter()
@@ -16,8 +18,8 @@ export default function CreateCatPage() {
   const [breeds, setBreeds] = useState<Breed[]>([])
   const [breedId, setBreedId] = useState<number | null>(null)
 
-  const [ImageKey, setImageKey] = useState<string | null>(null)
-  const [ImageUrl, setImageUrl] = useState<string | null>(null)
+  const [CatImageKey, setCatImageKey] = useState<string | null>(null)
+  const [CatImageUrl, setCatImageUrl] = useState<string | null>(null)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -50,8 +52,8 @@ export default function CreateCatPage() {
       sex,
       birthday,
       breedId,
-      ImageKey,
-      ImageUrl
+      CatImageKey,
+      CatImageUrl
     } 
 
     try {
@@ -76,6 +78,45 @@ export default function CreateCatPage() {
     }
   }
 
+  const handleCatImageUpload = async (
+    event: ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
+    if(!event.target.files || event.target.files.length === 0 ) {
+      return
+    }
+
+    const file = event.target.files[0]
+
+    const filePath = `private/${uuidv4()}`
+
+    // 画像を表示するためのURLを生成
+    const { data, error } = await supabase.storage
+      .from('cat_image')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
+
+      if(error) {
+        console.error("Storage Error:", error)
+        setError(error.message)
+        return
+      }
+
+      setCatImageKey(data.path)
+
+
+      // 表示
+      // 画像表示の時にDBから取得したキーをわたす
+      const {
+        data: { publicUrl },
+      } = supabase.storage
+      .from('cat_image')
+      .getPublicUrl(data.path)
+
+      setCatImageUrl(publicUrl)
+  }
+
   return (
     <div className="flex flex-col items-center mt-5 py-3">
       <h1 className="text-2xl">猫の追加</h1>
@@ -91,6 +132,7 @@ export default function CreateCatPage() {
         breeds={breeds}
         breedId={breedId}
         setBreedId={setBreedId}
+        handleCatImageUpload={handleCatImageUpload}
       />
     </div>
   )

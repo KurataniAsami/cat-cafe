@@ -25,7 +25,7 @@ export const CatCard = ({
   } = supabase.storage
     .from('cat_image')
     .getPublicUrl(CatImageKey)
-
+    
   return (
     <div>
       <Card>

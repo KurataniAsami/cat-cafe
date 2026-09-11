@@ -6,15 +6,15 @@ export type CreateCatRequestBody = {
   sex: string
   birthday: string 
   breedId: number
-  ImageKey?: string | null
-  ImageUrl?: string | null
+  CatImageKey?: string | null
+  CatImageUrl?: string | null
 }
 
 export const POST = async (request: NextRequest) => {
   try {
     const body: CreateCatRequestBody = await request.json()
 
-    const { name, sex, breedId, birthday, ImageKey, ImageUrl } = body
+    const { name, sex, breedId, birthday, CatImageKey, CatImageUrl } = body
 
     // 猫を作成した結果
     const catData = await prisma.cat.create({
@@ -23,8 +23,8 @@ export const POST = async (request: NextRequest) => {
         breedId,
         sex,
         birthday,
-        ImageKey,
-        ImageUrl
+        CatImageKey,
+        CatImageUrl
       }
     })
 
