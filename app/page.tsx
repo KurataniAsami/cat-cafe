@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BlogList, Breed, CatList } from "@/types/cat";
+import BlogCard from "./components/BlogCard";
+import { CatCard } from "./components/CatCard";
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-import BlogCard from "./components/BlogCard";
-import { CatCard } from "./components/CatCard";
+import { Button } from "@/components/ui/button"
 
 export default function Home() {
   const [cats, setCats] = useState<CatList[]>([])
@@ -78,7 +79,7 @@ export default function Home() {
       </div>
 
       {/* 猫リスト */}
-      <ul className="flex justify-center gap-3 mt-5">
+      <ul className="flex justify-center gap-3 mt-7">
         {cats.map((cat) => {
           return (
             <li
@@ -86,13 +87,23 @@ export default function Home() {
             >
               <CatCard
                 cat={cat}
-                CatImageKey={cat.CatImageKey}  
+                CatImageKey={cat.CatImageKey}
+                width={240}  
               />
             </li>
           )
         })}
       </ul>
-      
+
+      <div className="flex justify-center mt-5">
+        <Link
+          href="/catlist"
+          className="rounded-full bg-orange-400 text-white px-4 py-2 text-md font-bold"  
+        >
+          すべて見る
+        </Link>
+      </div>
+
       {/* blog */}
       <section id="blog">
         <h1 className="text-center mt-10 text-2xl">スタッフブログ</h1>

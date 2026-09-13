@@ -1,4 +1,3 @@
-// TOPページ用のGET
 
 import { prisma } from "@/libs/prisma"
 import { CatList } from "@/types/cat"
@@ -10,9 +9,16 @@ export type CatIndexResponse = {
 
 export const GET = async (request: NextRequest) => {
 
+  const { searchParams } = new URL(request.url)
+  const page = Number(searchParams.get("page") ?? 1)
+  const limit = Number(searchParams.get("limit") ?? 8)
+
+  const skip = (page -1) * limit
+
   try {
     const cats = await prisma.cat.findMany({
-      take: 4,   // 表示制限
+      skip,
+      take: limit,   
       select: {
         id: true,
         name: true,
@@ -30,9 +36,16 @@ export const GET = async (request: NextRequest) => {
       }
     })
 
+    const totalCats = await prisma.cat.count()
+
+    const totalPages = Math.ceil(totalCats / limit)
+
 
     return NextResponse.json({
       cats,
+      totalCats,
+      page,
+      totalPages
     }, { status: 200 })
 
   } catch(error) {

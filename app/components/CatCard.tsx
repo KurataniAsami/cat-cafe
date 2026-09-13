@@ -9,11 +9,13 @@ import Image from "next/image"
 type CatCardProps = {
   cat: CatList  // １匹のデータだから[]はいらない
   CatImageKey: string | null
+  width?: number
 }
 
 export const CatCard = ({
   cat,
-  CatImageKey
+  CatImageKey,
+  width
 }: CatCardProps) => {
   if(!CatImageKey) {
     return null
@@ -28,12 +30,13 @@ export const CatCard = ({
     
   return (
     <div>
-      <Card>
+      {/* TOPページのwidthは指定した数値、指定がなければwidth-full */}
+      <Card style={{ width: width ?? "100%" }}>
         <CardContent className="flex flex-col">
           <span className="text-xl font-bold">{cat.name}</span>
             <div
               // flexの時のボタン幅調整(flexない時はinline-block)
-              className="self-start bg-green-300 text-black font-bold"  
+              className="self-start p-1 bg-green-300 text-black font-bold"  
             >
               {cat.breed.name}
             </div>
@@ -42,13 +45,16 @@ export const CatCard = ({
             {new Date(cat.birthday).toLocaleDateString("ja-JP")}生まれ
           </span>
 
-          <Image
-            src={publicUrl}
-            alt="CatImage"
-            width={300}
-            height={300}
-            className="rounded-full"
-          />
+          <div className="flex justify-center mt-3">
+            <div className="relative w-[140px] h-[140px]">
+              <Image
+                src={publicUrl}
+                alt="CatImage"
+                fill
+                className="rounded-full object-cover"
+              />
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>

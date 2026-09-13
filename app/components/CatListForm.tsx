@@ -130,7 +130,7 @@ export default function CatListForm({
           />
         </div>
 
-        <div className="flex justify-between items-center mt-2 pt-4">
+        <div className="flex flex-col mt-2 pt-4">
           <label htmlFor="ImageKey"
             className="flex gap-2 items-center cursor-pointer"
           >
@@ -158,5 +158,3 @@ export default function CatListForm({
     </div>
   )
 }
-
-// POSTできない

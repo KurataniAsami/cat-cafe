@@ -3,13 +3,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Breed, CatList } from "@/types/cat";
+import { CatCard } from "@/app/components/CatCard";
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-
 
 export default function BreedPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -86,15 +85,10 @@ export default function BreedPage() {
               <li
                 key={cat.id}
               >
-                <Card>
-                  <CardContent className="flex flex-col">
-                    <span className="text-xl font-bold">{cat.name}</span>
-                    <span className="text-orange-400 mt-2">{cat.sex}</span>
-                    <span className="text-gray-600 mt-2">
-                      {new Date(cat.birthday).toLocaleDateString("ja-JP")}生まれ
-                    </span>
-                  </CardContent>
-                </Card>
+                <CatCard
+                  cat={cat}
+                  CatImageKey={cat.CatImageKey}  
+                />
               </li>
             )
           })}
