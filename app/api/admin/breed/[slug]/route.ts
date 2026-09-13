@@ -13,7 +13,11 @@ export const GET = async (
         slug,
       },
       include: {
-        cats: true,
+        cats: {
+          include: {
+            breed: true
+          }
+        }
       }
     })
 
