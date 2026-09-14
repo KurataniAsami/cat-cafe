@@ -9,6 +9,8 @@ import {
 import { Breed } from "@/types/cat"
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react"
 import LocalSeeIcon from '@mui/icons-material/LocalSee';
+import { CatImagePreview } from "./CatImagePreview";
+import ClearIcon from '@mui/icons-material/Clear';
 
 type CatListFormProps = {
   onSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>
@@ -22,6 +24,8 @@ type CatListFormProps = {
   breedId: number | null
   setBreedId: Dispatch<SetStateAction<number | null>>
   handleCatImageUpload: (event: ChangeEvent<HTMLInputElement, Element>) => Promise<void>
+  CatImageKey: string | null
+  handleRemoveImage: () => Promise<void>
 }
 
 export default function CatListForm({
@@ -35,7 +39,9 @@ export default function CatListForm({
   breeds,
   breedId,
   setBreedId,
-  handleCatImageUpload
+  handleCatImageUpload,
+  CatImageKey,
+  handleRemoveImage
 }:CatListFormProps) {
 
   // 性別のセレクトメニュー
@@ -58,7 +64,7 @@ export default function CatListForm({
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border border-gray-200 rounded-md px-2 py-0.5 w-[180px]"
+            className="border border-gray-200 rounded-md px-2 py-0.5 w-[300px]"
             placeholder="タマ"
           />
         </div>
@@ -71,7 +77,7 @@ export default function CatListForm({
             value={sex}
             onValueChange={(value) => setSex(value ?? "")}
           >
-            <SelectTrigger className="w-[180px] mt-1">
+            <SelectTrigger className="w-[300px] mt-1">
               <SelectValue placeholder="性別を選択" />
             </SelectTrigger>
             <SelectContent>
@@ -94,7 +100,7 @@ export default function CatListForm({
             value={breedId === null ? "" : String(breedId)}  // placeholderを表示させる
             onValueChange={(value) => setBreedId(Number(value))}
           >
-            <SelectTrigger className="w-[180px] mt-1">
+            <SelectTrigger className="w-[300px] mt-1">
               <SelectValue>
                 {breedId === null
                   ? "品種を選択"
@@ -130,22 +136,39 @@ export default function CatListForm({
           />
         </div>
 
-        <div className="flex flex-col mt-2 pt-4">
-          <label htmlFor="ImageKey"
-            className="flex gap-2 items-center cursor-pointer"
-          >
-            画像
-            <div className="mb-0.5">
-              <LocalSeeIcon/>
+        <div className="flex flex-col mt-2">
+          <div className="mt-3 flex gap-2 justify-between">
+            <div>
+              <label htmlFor="ImageKey"
+                className="flex gap-2 items-center cursor-pointer"
+              >
+                画像
+                <div className="mb-0.5">
+                  <LocalSeeIcon/>
+                </div>
+              </label>
+              
+              <input
+                type="file"
+                id="ImageKey"
+                onChange={handleCatImageUpload}
+                className="sr-only"
+              />
             </div>
-          </label>
 
-          <input
-            type="file"
-            id="ImageKey"
-            onChange={handleCatImageUpload}
-            className="sr-only"
-          />
+            <button
+              type="button"
+              onClick={handleRemoveImage}
+            >
+              <ClearIcon/>
+            </button>
+          </div>
+
+          <div className="mt-3 mb-2">
+            <CatImagePreview
+              CatImageKey={CatImageKey}
+            />
+          </div>
 
           <button
             type="submit"

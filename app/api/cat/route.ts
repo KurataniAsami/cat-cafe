@@ -1,5 +1,4 @@
 // TOPページ用のGET
-
 import { prisma } from "@/libs/prisma"
 import { CatList } from "@/types/cat"
 import { NextRequest, NextResponse } from "next/server"

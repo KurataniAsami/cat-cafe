@@ -1,5 +1,43 @@
 import { prisma } from "@/libs/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { CatList } from "@/types/cat"
+
+// 管理ページ一覧
+export type CatIndexResponse = {
+  cats: CatList[]
+}
+
+export const GET = async (request: NextRequest) => {
+
+  try {
+    const cats = await prisma.cat.findMany({
+      select: {
+        id: true,
+        name: true,
+        sex: true,
+        birthday: true,
+        CatImageKey: true,
+
+        breed: {
+          select: {
+            id: true,
+            name: true,
+            slug: true
+          }
+        }
+      }
+    })
+
+
+    return NextResponse.json({
+      cats,
+    }, { status: 200 })
+
+  } catch(error) {
+    if(error instanceof Error)
+      return NextResponse.json({ message: error.message }, { status: 400 })
+  }
+}
 
 export type CreateCatRequestBody = {
   name: string

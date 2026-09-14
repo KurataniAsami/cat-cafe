@@ -117,6 +117,23 @@ export default function CreateCatPage() {
       setCatImageUrl(publicUrl)
   }
 
+  // 画像キャンセル
+  const handleRemoveImage = async () => {
+    if(!CatImageKey) return
+
+    const { error } = await supabase.storage
+      .from('cat_image')
+      .remove([CatImageKey])
+
+    if(error) {
+      setError(error.message)
+      return
+    }
+
+    setCatImageKey(null)
+    setCatImageUrl(null)
+  }
+
   return (
     <div className="flex flex-col items-center mt-5 py-3">
       <h1 className="text-2xl">猫の追加</h1>
@@ -133,6 +150,8 @@ export default function CreateCatPage() {
         breedId={breedId}
         setBreedId={setBreedId}
         handleCatImageUpload={handleCatImageUpload}
+        CatImageKey={CatImageKey}
+        handleRemoveImage={handleRemoveImage}
       />
     </div>
   )

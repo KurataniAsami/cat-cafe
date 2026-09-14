@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { CatList } from "@/types/cat";
 import DeleteModal from "../components/DeletModal";
-import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
 
 export default function AdminHome() {
@@ -16,14 +16,14 @@ export default function AdminHome() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null);
 
-  const { id } = useParams()
   const router = useRouter()
 
   useEffect(() => {
     const getAllCats = async () => {
-      const res = await fetch(`/api/cat`)
+      const res = await fetch(`/api/admin/cats`)
       const data = await res.json()
       setCats(data.cats)
+      setLoading(false)
     }
 
     getAllCats()
@@ -60,7 +60,7 @@ export default function AdminHome() {
     <div>
       <h1 className="text-center mt-3">登録済みの猫</h1>
 
-      <ul className="flex flex-col justify-center gap-3 mt-5">
+      <ul className="flex flex-col justify-center gap-3 mt-5 ml-5">
         {cats.map((cat) => {
           return (
             <li
@@ -69,7 +69,7 @@ export default function AdminHome() {
             >
               <span className="w-32 text-xl font-bold">{cat.name}</span>
 
-              <div className="flex gap-1">
+              <div className="flex gap-1 w-[340px]">
                 <div
                   // flexの時のボタン幅調整(flexない時はinline-block)
                   className="self-start text-black font-bold"  

@@ -3,7 +3,7 @@ import { SidebarData } from "./SidebarData"
 
 export default function Sidebar() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-full bg-white">
       {SidebarData.map((value, key) => (
         <li
           key={key}

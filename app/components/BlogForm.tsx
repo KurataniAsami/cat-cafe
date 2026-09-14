@@ -138,10 +138,12 @@ export default function BlogForm({
             </button>
           </div>
 
-          {/* 画像プレビュー */}
-          <BlogThumbnail
-            thumbnailImageKey={thumbnailImageKey}
-          />
+          <div className="mt-3">
+            {/* 画像プレビュー */}
+            <BlogThumbnail
+              thumbnailImageKey={thumbnailImageKey}
+            />
+          </div>
         </div>
 
         <div className="flex justify-center items-center mt-2 pt-4">
