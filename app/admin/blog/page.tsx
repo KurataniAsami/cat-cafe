@@ -41,7 +41,7 @@ export default function AdminBlogPage() {
 
 
   const getAllBlogs = async () => {
-    const res = await fetch(`/api/blog`)
+    const res = await fetch(`/api/admin/blog`)
     const data = await res.json()
 
     setBlogs(data.blogs)
@@ -285,6 +285,7 @@ export default function AdminBlogPage() {
               categories={categories}
               setCategories={setCategories}
               handleRemoveImage={handleRemoveImage}
+              editMessage="記事の編集"
             />
           </DialogContent>
         </Dialog>

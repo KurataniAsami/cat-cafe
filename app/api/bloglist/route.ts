@@ -15,9 +15,17 @@ export type CatBlogIndexResponse = {
 }
 
 export const GET = async (request: NextRequest) => {
+
+  const { searchParams } = new URL(request.url)
+  const page = Number(searchParams.get("page") ?? 1)
+  const limit = Number(searchParams.get("limit") ?? 8)
+
+  const skip = (page -1) * limit
+
   try {
     const blogs = await prisma.catBlog.findMany({
-      take: 4,
+      skip,
+      take: limit,
       include: {
         catBlogCategory: {
           select: {
@@ -31,10 +39,21 @@ export const GET = async (request: NextRequest) => {
       }
     })
 
-    return NextResponse.json({ blogs }, { status: 200 })
+    const totalBlogs = await prisma.catBlog.count()
+
+    const totalPages = Math.ceil(totalBlogs / limit)
+
+    return NextResponse.json({
+      blogs,
+      totalBlogs,
+      page,
+      totalPages
+    }, { status: 200 })
   } catch(error) {
     if(error instanceof Error)
       return NextResponse.json({ message: error.message }, { status: 400 })
   }
 }
+
+
 

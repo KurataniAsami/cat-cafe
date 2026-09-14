@@ -32,6 +32,7 @@ type createBlogProps = {
   setImageUrl: Dispatch<SetStateAction<string | null>>
   handleBlogImageUpload: (post: ChangeEvent<HTMLInputElement, Element>) => Promise<void>
   handleRemoveImage: () => Promise<void>
+  editMessage: string
 }
 
 export default function BlogForm({
@@ -46,12 +47,16 @@ export default function BlogForm({
   categories,
   mode,
   handleBlogImageUpload,
-  handleRemoveImage
+  handleRemoveImage,
+  editMessage
 }:createBlogProps) {
 
   return (
     <div className="flex flex-col items-center mt-5 py-3">
-      <h1 className="text-2xl">記事の作成</h1>
+      {editMessage && (
+        <h1 className="text-xl">{editMessage}</h1>
+      )}
+
       <form
         onSubmit={onSubmit}
         className="mt-3"

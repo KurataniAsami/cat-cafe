@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card"
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Home() {
+export default function CatListPage() {
   const router = useRouter()
 
   const [cats, setCats] = useState<CatList[]>([])
