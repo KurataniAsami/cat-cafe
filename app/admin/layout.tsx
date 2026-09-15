@@ -6,15 +6,15 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-      <div className="flex">
-        <aside className="basis-[30%] min-h-screen">
-          <Sidebar />
-        </aside>
+    <div className="flex">
+      <aside className="basis-[30%] min-h-screen">
+        <Sidebar />
+      </aside>
 
-        <main className="basis-[70%]">
-          {children}
-        </main>
+      <main className="basis-[70%]">
+        {children}
+      </main>
 
-      </div>
+    </div>
   );
 }

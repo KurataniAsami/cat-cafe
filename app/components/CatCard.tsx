@@ -1,10 +1,10 @@
+import Image from "next/image"
+import { supabase } from "@/libs/supabase"
+import { CatList } from "@/types/cat"
 import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-import { supabase } from "@/libs/supabase"
-import { CatList } from "@/types/cat"
-import Image from "next/image"
 
 type CatCardProps = {
   cat: CatList  // １匹のデータだから[]はいらない

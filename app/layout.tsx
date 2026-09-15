@@ -29,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <ul className="flex justify-end gap-7 mt-3 mr-3">
             <Link href="/">ホーム</Link>
             <Link href="/blog">スタッフブログ</Link>
+            <Link href="/shop">ショップ</Link>
             <Link href="/contact">お問い合わせ</Link>
             <Link href="/admin">管理画面</Link>
           </ul>
