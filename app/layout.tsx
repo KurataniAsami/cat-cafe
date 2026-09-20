@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { ModalProvider } from "./context/modalContent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +35,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/admin">管理画面</Link>
           </ul>
         </nav>
-        {children}
+        <ModalProvider>
+          {children}
+        </ModalProvider>
       </body>
     </html>
   );
