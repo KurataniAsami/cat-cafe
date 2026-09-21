@@ -9,12 +9,28 @@ import {
 } from "@/components/ui/dialog"
 import { useModal } from "../context/modalContent";
 import { useState } from "react";
+import { addToCartAction } from "../admin/actions/cartActions";
 
 export default function MenuModal() {
   // 選択した商品の数量を管理
   const [quantity, setQuantity] = useState(1)
 
   const { isOpen, closeModal, selectedMenu } = useModal()
+
+  const handleAddToCart = async () => {
+    if(!selectedMenu) return;
+
+    try {
+      // ServerActions呼び出し
+      await addToCartAction(selectedMenu, quantity)
+
+      closeModal()
+
+    } catch(error) {
+      console.error(error)
+      alert("エラーが発生しました")
+    }
+  }
 
   return (
     <div>
@@ -26,7 +42,7 @@ export default function MenuModal() {
         {/* stateの開閉処理だとカート処理などを実装した時,layoutからshopまでpropsを
             まわしていかないといけなくなるのでContext APIを使用する
         */}
-        <DialogTrigger>Open</DialogTrigger>
+        {/* <DialogTrigger>Open</DialogTrigger> */}
         <DialogContent className="lg:max-w-4xl">
           {selectedMenu && (
             <>
@@ -75,6 +91,7 @@ export default function MenuModal() {
 
                     <DialogClose
                       type="button"
+                      onClick={handleAddToCart}
                       className="mt-6 h-14 text-lg font-semibold bg-black text-white rounded-md"
                     >
                       商品を追加（￥{selectedMenu.price * quantity}）

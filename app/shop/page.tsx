@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { CatGoods } from "@/types/cat"
 import MenuModal from "../components/menu-modal"
 import GoodsCard from "../components/GoodsCard"
+import Cart from "../components/cart"
 
 export default function ShopPage() {
   const [goods, setGoods] = useState<CatGoods[]>([])
@@ -34,10 +35,12 @@ export default function ShopPage() {
               )
             })}
           </ul>
+
+          <MenuModal/>
         </main>
 
         <aside className="basis-[30%] min-h-screen bg-white">
-          <MenuModal/>
+          <Cart/>
         </aside>
       </div>
     </div>

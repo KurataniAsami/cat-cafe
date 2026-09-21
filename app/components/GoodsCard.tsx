@@ -4,7 +4,7 @@ import {
 } from "@/components/ui/card"
 import { CatGoods } from "@/types/cat"
 import { useModal } from "../context/modalContent"
-import MenuModal from "./menu-modal"
+
 
 type GoodsCardProps = {
   goods: CatGoods
@@ -43,7 +43,6 @@ export default function GoodsCard({
               /> */}
             </div>
           </div>
-          <MenuModal/>
         </CardContent>
       </Card>
     </div>

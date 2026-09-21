@@ -73,3 +73,9 @@ export type CatGoods = {
 export type CatGoodsIndexResponse = {
   goods: CatGoods[]
 }
+
+// Cart
+export type CartItem = {
+  goods: CatGoods
+  quantity: number
+}

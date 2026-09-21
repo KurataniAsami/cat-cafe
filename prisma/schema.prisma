@@ -49,11 +49,33 @@ model CatBlogCategory {
 }
 
 model CatGoods {
+  id          Int       @id @default(autoincrement())
+  name        String
+  price       Int
+  imageKey    String?
+  imageUrl    String?
+
+  cartItems   CatCartItem[]
+}
+
+model CatCart {
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  items       CatCartItem[]
+}
+
+model CatCartItem {
   id        Int       @id @default(autoincrement())
-  name      String
-  price     Int
-  imageKey  String?
-  imageUrl  String?
+
+  cartId    Int
+  cart      CatCart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  goodsId   Int
+  goods     CatGoods  @relation(fields: [goodsId], references: [id], onDelete: Cascade)
+
+  quantity  Int       @default(1)
 }
 
 
