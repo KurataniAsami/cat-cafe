@@ -21,7 +21,11 @@ export default function ShopPage() {
 
   return (
     <div>
-      <h1>アイテムショップ</h1>
+      <div className="flex justify-between">
+        <h1>アイテムショップ</h1>
+        <Cart/>
+      </div>
+      
       <div className="flex">
         <main className="basis-[70%]">
           <ul>
@@ -35,13 +39,8 @@ export default function ShopPage() {
               )
             })}
           </ul>
-
           <MenuModal/>
         </main>
-
-        <aside className="basis-[30%] min-h-screen bg-white">
-          <Cart/>
-        </aside>
       </div>
     </div>
   )

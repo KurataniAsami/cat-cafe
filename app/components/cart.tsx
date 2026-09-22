@@ -12,7 +12,7 @@ export default function Cart() {
 
   return (
     displayMode === "cartSheet" ? (
-      <CartSheet />
+      <CartSheet cart={sheetCart} count={cartCount}/>
     ) : (
       <CartDropDown />
     )

@@ -22,7 +22,7 @@ export function useCart( enabled = true) {
     error: cartsError,
     isLoading,
     mutate: mutateCart,  // データを更新する
-  } = useSWR<CartResponse[]>(`/api/cart`,
+  } = useSWR<CartResponse>(`/api/cart`,
       fetcher,
     {
       isPaused: () => !enabled,

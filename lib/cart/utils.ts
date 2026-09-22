@@ -11,7 +11,7 @@ const sumItems = (cartItems: CartItem[]) =>
 
 export function computeCartDisplayLogic(carts: CartItem[] | undefined
 ) {
-  const items = carts?.cartItems ?? []
+  const items = carts ?? []
   
   // カートなし
   if(!carts || carts.length === 0) {
