@@ -22,7 +22,7 @@ export async function addToCartAction(
         id: existingItem.id,
       },
       data: {
-        quantity: existingItem.quantity + quantity,
+        quantity,
       },
     })
   } else {
@@ -35,3 +35,30 @@ export async function addToCartAction(
     })
   }
 }
+
+export async function updateCartItemAction(
+  quantity: number,
+  cartItemId: number
+) {
+  if (quantity === 0) {
+    // 削除処理
+    await prisma.catCartItem.delete({
+      where: {
+        id: cartItemId,
+      },
+    })
+
+    return
+  }
+
+  // 数量更新
+  await prisma.catCartItem.update({
+    where: {
+      id: cartItemId,
+    },
+    data: {
+      quantity,
+    },
+  })
+}
+

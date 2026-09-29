@@ -1,7 +1,6 @@
 // カートの商品数によって表示を切り替える
 // 0 → カートに商品を追加してください
 // 1 → ドロワー
-// 2～ → ドロップダウン
 
 import { CartItem } from "@/types/cat";
 
@@ -27,7 +26,4 @@ export function computeCartDisplayLogic(carts: CartItem[] | undefined
       cartCount: sumItems(carts)
     };
   }
-
-  // カート2件～
-  return {displayMode: "cartDropDown", sheetCart: null, cartCount: 0}
 }

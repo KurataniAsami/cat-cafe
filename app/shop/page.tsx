@@ -20,7 +20,7 @@ export default function ShopPage() {
   },[])
 
   return (
-    <div>
+    <div className="pt-3">
       <div className="flex justify-between">
         <h1>アイテムショップ</h1>
         <Cart/>
