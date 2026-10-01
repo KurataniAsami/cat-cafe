@@ -1,15 +1,15 @@
 'use client'
 
+import { useState } from "react";
 import Image from "next/image";
+import { useModal } from "../context/modalContent";
+import { addToCartAction } from "../admin/actions/cartActions";
+import { useCart } from "@/hooks/cart/useCart";
 import {
   Dialog,
   DialogContent,
-  DialogTrigger,
   DialogClose
 } from "@/components/ui/dialog"
-import { useModal } from "../context/modalContent";
-import { useState } from "react";
-import { addToCartAction } from "../admin/actions/cartActions";
 
 export default function MenuModal() {
   // 選択した商品の数量を管理
@@ -17,12 +17,16 @@ export default function MenuModal() {
 
   const { isOpen, closeModal, selectedMenu } = useModal()
 
+  const { mutateCart } = useCart()
+
   const handleAddToCart = async () => {
     if(!selectedMenu) return;
 
     try {
       // ServerActions呼び出し
-      await addToCartAction(selectedMenu, quantity)
+      await addToCartAction(selectedMenu, quantity);
+
+      await mutateCart();  // 呼び出し
 
       closeModal()
 
@@ -107,5 +111,3 @@ export default function MenuModal() {
 }
 
 // カート
-{/* <Drawer swipeDirection="right"> */}
-        

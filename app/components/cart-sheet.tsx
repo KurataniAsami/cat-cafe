@@ -1,8 +1,8 @@
 import { useCart } from "@/hooks/cart/useCart";
 import Link from "next/link";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { updateCartItemAction } from "../admin/actions/cartActions";
 import { CartItem } from "@/types/cat"
+import { calculateItemTotal, calculateToalPrice } from "@/lib/cart/utils";
+import { updateCartItemAction } from "../admin/actions/cartActions";
 import {
   Sheet,
   SheetClose,
@@ -19,6 +19,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { ShoppingCart } from "lucide-react";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type CartSeetProps = {
   cart: CartItem[];
@@ -32,12 +33,6 @@ export default function CartSheet({
   const { carts, mutateCart } = useCart()
   // cartItemsを配列にしてmapできるようにする
   const cartItems = carts?.cartItems ?? [];  // カートがなければ配列にする
-
-  const calculateItemTotal = (item: CartItem) =>
-    item.quantity * item.goods.price;
-
-  const calculateToalPrice = (cartItem: CartItem[]) => 
-    cartItem.reduce((sum, item) => sum + calculateItemTotal(item), 0)  // 0はsumの初期値
 
   const handleUpdateCartItem = async (value: string, cartItemId: number) => {
     if(!cart) return;

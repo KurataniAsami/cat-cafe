@@ -5,7 +5,7 @@
 import { CartItem } from "@/types/cat";
 
 // カート内のアイテムの合計数を求める関数
-const sumItems = (cartItems: CartItem[]) => 
+export const sumItems = (cartItems: CartItem[] = []) => 
   cartItems.reduce((sum, item) => sum + item.quantity ,0)
 
 export function computeCartDisplayLogic(carts: CartItem[] | undefined
@@ -27,3 +27,10 @@ export function computeCartDisplayLogic(carts: CartItem[] | undefined
     };
   }
 }
+
+// 関数を使いまわす時はこのファイルから呼び出す
+export const calculateItemTotal = (item: CartItem) =>
+  item.quantity * item.goods.price;
+
+export const calculateToalPrice = (cartItem: CartItem[]) => 
+  cartItem.reduce((sum, item) => sum + calculateItemTotal(item), 0)  // 0はsumの初期値

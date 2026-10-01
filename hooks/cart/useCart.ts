@@ -16,6 +16,7 @@ const fetcher = async (url: string) => {
   return data;
 };
 
+// mutateCartはSWRが持っている「/api/cart のデータ」を再取得・再検証する関数
 export function useCart( enabled = true) {
   const {
     data: carts,
