@@ -10,6 +10,9 @@ export async function GET(request:NextRequest) {
     include: {
       goods: true,
     },
+    orderBy: {
+      id: "asc"
+    }
   })
 
     return NextResponse.json({ cartItems }, { status: 200 })
