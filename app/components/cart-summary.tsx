@@ -23,6 +23,19 @@ export default function CartSummary() {
 
   const cartItems = carts?.cartItems ?? [];
 
+  // 購入ボタン
+  const handleClick = async () => {
+    const res = await fetch(`/api/checkout`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        cartId: 1,
+      })
+    })
+
+    const data = await res.json();
+  }
+
   if(cartsError) {
     console.error(cartsError);
     return <div>{cartsError.message}</div>
@@ -137,7 +150,9 @@ export default function CartSummary() {
       </CardFooter>
 
       <div className="flex justify-center mt-3">
-        <Button className="cursor-pointer mb-7 w-[300px]">
+        <Button
+          onClick={handleClick}
+          className="cursor-pointer mb-7 w-[300px]">
           注文を確定する
         </Button>
       </div>
