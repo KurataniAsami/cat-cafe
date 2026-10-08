@@ -1,40 +1,42 @@
 "use server";
 
-import Stripe from "stripe";
 import { prisma } from "@/libs/prisma";
+import { stripe } from "@/config/stripe";
 
-// インスタンス化(下記を実行するとcheckout.sessionsやcreateなどが呼び出せる)
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-export async function createStripeSession(goodsId: number, quantity: number) {
-  const goods = await prisma.catGoods.findUnique({
+export async function createStripeSession(cartId: number) {
+  const cartItems = await prisma.catCartItem.findMany({
     where: {
-      id: goodsId,
+      cartId,
+    },
+    include: {
+      goods: true,
     },
   });
 
-  if (!goods) {
-    throw new Error("商品が見つかりません。");
+  if (cartItems.length === 0) {
+    throw new Error("カートが空です。");
   }
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
 
-    line_items: [
-      {
-        price_data: {
-          currency: "jpy",
-          product_data: {
-            name: goods.name,
-          },
-          unit_amount: goods.price,
+    line_items: cartItems.map((item) => ({
+      price_data: {
+        currency: "jpy",
+        product_data: {
+          name: item.goods.name,
         },
-        quantity,
+        unit_amount: item.goods.price,
       },
-    ],
+      quantity: item.quantity,
+    })),
+
+    metadata: {
+      cartId: String(cartId),
+    },
 
     success_url: `${process.env.BASE_URL}/shop/success`,
-    cancel_url: `${process.env.BASE_URL}/cart`,  // キャンセル時のリダイレクト先
+    cancel_url: `${process.env.BASE_URL}/cart`,
   });
 
   if (!session.url) {

@@ -34,6 +34,15 @@ export default function CartSummary() {
     })
 
     const data = await res.json();
+
+    if (!res.ok) {
+    console.error(data.message);
+    return;
+  }
+
+  if (data.url) {
+    window.location.href = data.url;
+  }
   }
 
   if(cartsError) {
@@ -159,3 +168,8 @@ export default function CartSummary() {
     </Card>
   );
 }
+
+// テスト用、クレジットのダミーデータ
+// カード番号: 4242 4242 4242 4242
+// 有効期限: 未来の日付（例：12/34）
+// CVC: 123
