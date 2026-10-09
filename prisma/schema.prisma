@@ -48,7 +48,8 @@ model CatBlogCategory {
   catBlog CatBlog[]
 }
 
-model CatGoods {
+// 商品情報
+model CatGoods {    
   id       Int     @id @default(autoincrement())
   name     String
   price    Int
@@ -68,37 +69,41 @@ model CatCart {
 }
 
 model CatCartItem {
-  id Int @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
 
-  cartId Int
-  cart   CatCart @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId    Int
+  cart      CatCart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
 
-  goodsId Int
-  goods   CatGoods @relation(fields: [goodsId], references: [id], onDelete: Cascade)
+  goodsId   Int
+  goods     CatGoods  @relation(fields: [goodsId], references: [id], onDelete: Cascade)
 
-  quantity Int @default(1)
+  quantity  Int       @default(1)
 }
 
-// 購入した商品のテーブル
+// 購入した商品の1件分のテーブル
 model CatOrder {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())   // 購入日時
 
-  items OrderItem[]
+  items       OrderItem[]
 }
 
+// 購入した商品の明細
 model OrderItem {
-  id Int @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
 
-  orderId Int
-  order   CatOrder @relation(fields: [orderId], references: [id])
+  orderId   Int
+  order     CatOrder  @relation(fields: [orderId], references: [id])
 
-  goodsId Int
-  goods   CatGoods @relation(fields: [goodsId], references: [id])
+  goodsId   Int
+  goods     CatGoods  @relation(fields: [goodsId], references: [id])
 
-  quantity Int
-  price    Int
+  quantity  Int
+  price     Int
 }
+
+
+
 
 // 過去のプロジェクト
 // 1つのPostに対して投稿者は1人だけ
