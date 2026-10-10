@@ -10,10 +10,10 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field"
-import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { formSchema } from "@/lib/formSchema"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function MailForm() {
   const form = useForm({resolver: zodResolver(formSchema),
@@ -25,17 +25,18 @@ export default function MailForm() {
     },
   });
 
-  const onSubmit = (values: any) => {
+  const onSubmit = (values: {
+    username: string;
+    subject: string;
+    email: string;
+    content: string;
+    }) => {
     console.log(values)
   }
 
   return (
     <div>
-      <form
-        onSubmit={() => {
-          form.handleSubmit(onsubmit)
-        }}
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
         <FieldLegend>お問い合わせ</FieldLegend>
 
@@ -86,7 +87,7 @@ export default function MailForm() {
               本文
             </FieldLabel>
 
-            <Input
+            <Textarea
               id="content"
               {...form.register("content")}
               placeholder="本文を入力してください"
