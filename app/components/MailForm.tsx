@@ -5,11 +5,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Field,
   FieldDescription,
+  FieldError,
   FieldGroup,
   FieldLabel,
-  FieldLegend,
   FieldSet,
-} from "@/components/ui/field"
+  FieldLegend,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { formSchema } from "@/lib/formSchema"
@@ -31,12 +32,16 @@ export default function MailForm() {
     email: string;
     content: string;
     }) => {
-    console.log(values)
+    console.log("送信成功", values);
   }
+
+  const onError = (errors: typeof form.formState.errors) => {
+  console.log("入力エラー", errors);
+};
 
   return (
     <div>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit, onError)}>
         <FieldSet>
         <FieldLegend>お問い合わせ</FieldLegend>
 
@@ -55,6 +60,13 @@ export default function MailForm() {
               {...form.register("username")}
               placeholder="お名前を入力してください"
             />
+
+            {/* usernameがエラーの場合 */}
+            {form.formState.errors.username && (
+              <FieldError>
+                {form.formState.errors.username.message}
+              </FieldError>
+            )}
           </Field>
 
           <Field>
@@ -68,6 +80,12 @@ export default function MailForm() {
               {...form.register("email")}
               placeholder="example@example.com"
             />
+
+            {form.formState.errors.email && (
+              <FieldError>
+                {form.formState.errors.email.message}
+              </FieldError>
+            )}
           </Field>
 
           <Field>
@@ -80,6 +98,12 @@ export default function MailForm() {
               {...form.register("subject")}
               placeholder="タイトルを入力してください"
             />
+
+            {form.formState.errors.subject && (
+              <FieldError>
+                {form.formState.errors.subject.message}
+              </FieldError>
+            )}
           </Field>
 
           <Field>
@@ -92,6 +116,12 @@ export default function MailForm() {
               {...form.register("content")}
               placeholder="本文を入力してください"
             />
+
+            {form.formState.errors.content && (
+              <FieldError>
+                {form.formState.errors.content.message}
+              </FieldError>
+            )}
           </Field>
 
           <Button type="submit">

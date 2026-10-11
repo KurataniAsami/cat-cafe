@@ -8,7 +8,7 @@ export const formSchema = z.object({
   subject: z
     .string()
     .min(2, {
-    message: "主題は2文字以上で入力してください"
+    message: "タイトルは2文字以上で入力してください"
   }),
 
   email: z
