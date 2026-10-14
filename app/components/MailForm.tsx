@@ -1,7 +1,6 @@
 'use client'
 
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useMailForm } from "@/hooks/useMailForm";
 import {
   Field,
   FieldDescription,
@@ -13,35 +12,14 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { formSchema } from "@/lib/formSchema"
 import { Textarea } from "@/components/ui/textarea"
 
 export default function MailForm() {
-  const form = useForm({resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      subject: "",
-      email: "",
-      content: "",
-    },
-  });
-
-  const onSubmit = (values: {
-    username: string;
-    subject: string;
-    email: string;
-    content: string;
-    }) => {
-    console.log("送信成功", values);
-  }
-
-  const onError = (errors: typeof form.formState.errors) => {
-  console.log("入力エラー", errors);
-};
+  const { form, onSubmit } = useMailForm();
 
   return (
     <div>
-      <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldSet>
         <FieldLegend>お問い合わせ</FieldLegend>
 
