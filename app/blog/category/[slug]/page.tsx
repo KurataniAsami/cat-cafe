@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
 import { BlogCategory, BlogList } from "@/types/cat"
-import BlogCard from "@/app/components/BlogCard"
-import CategorySidebar from "@/app/components/CategorySidebar"
+import BlogCard from "@/app/components/blog/BlogCard"
+import CategorySidebar from "@/app/components/layout/CategorySidebar"
 import {
   Card,
   CardContent,

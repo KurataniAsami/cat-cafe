@@ -5,13 +5,13 @@ import Link from "next/link"
 import { useParams } from "next/navigation"
 import { BlogShowResponse } from "@/app/api/blog/[id]/route"
 import { BlogCategory } from "@/types/cat"
-import CategorySidebar from "@/app/components/CategorySidebar"
+import CategorySidebar from "@/app/components/layout/CategorySidebar"
 import {
   Card,
   CardContent,
   CardTitle,
 } from "@/components/ui/card"
-import { BlogThumbnail } from "@/app/components/BlogThumbnail"
+import { BlogThumbnail } from "@/app/components/blog/BlogThumbnail"
 
 export default function BlogDetailPage() {
 

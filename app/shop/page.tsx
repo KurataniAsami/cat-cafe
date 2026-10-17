@@ -5,7 +5,7 @@ import Link from "next/link"
 import { CatGoods } from "@/types/cat"
 import MenuModal from "../components/menu-modal"
 import GoodsCard from "../components/GoodsCard"
-import Cart from "../components/cart"
+import Cart from "../components/cart/cart"
 import { Button } from "@/components/ui/button";
 
 export default function ShopPage() {

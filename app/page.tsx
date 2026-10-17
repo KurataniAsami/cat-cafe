@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BlogList, Breed, CatList } from "@/types/cat";
-import BlogCard from "./components/BlogCard";
-import { CatCard } from "./components/CatCard";
+import BlogCard from "./components/blog/BlogCard";
+import { CatCard } from "./components/cat/CatCard";
 import {
   Card,
   CardContent,

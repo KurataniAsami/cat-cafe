@@ -1,4 +1,4 @@
-import BlogPage from "../components/BlogCard"
+import BlogPage from "../components/blog/BlogCard"
 
 export default function BlogTopPage() {
 

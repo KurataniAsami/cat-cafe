@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { BlogList } from "@/types/cat";
-import BlogCard from "../components/BlogCard";
+import BlogCard from "../components/blog/BlogCard";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function BlogListPage() {

@@ -9,7 +9,7 @@ import {
 import { Breed } from "@/types/cat"
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from "react"
 import LocalSeeIcon from '@mui/icons-material/LocalSee';
-import { CatImagePreview } from "./CatImagePreview";
+import { CatImagePreview } from "./cat/CatImagePreview";
 import ClearIcon from '@mui/icons-material/Clear';
 
 type CatListFormProps = {

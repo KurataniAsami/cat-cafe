@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { UpdateBlogRequestBody } from "@/app/api/admin/blog/[id]/route"
 import { BlogCategory, BlogList } from "@/types/cat"
 import BlogForm from "@/app/components/BlogForm"
-import DeleteModal from "@/app/components/DeleteModal"
+import DeleteModal from "@/app/components/blog/DeleteModal"
 import {
   Dialog,
   DialogContent,

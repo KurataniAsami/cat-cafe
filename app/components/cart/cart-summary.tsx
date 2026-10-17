@@ -14,7 +14,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import CartSkeleton from "./cart-skelton";
+import CartSkeleton from "./cart/cart-skelton";
 import { calculateItemTotal, calculateToalPrice, sumItems } from "@/lib/cart/utils";
 import { updateCartItemAction } from "../admin/actions/cartActions";
 

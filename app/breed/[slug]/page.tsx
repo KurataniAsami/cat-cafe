@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Breed, CatList } from "@/types/cat";
-import { CatCard } from "@/app/components/CatCard";
+import { CatCard } from "@/app/components/cat/CatCard";
 import {
   Card,
   CardContent,

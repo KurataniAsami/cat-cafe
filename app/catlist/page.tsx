@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Breed, CatList } from "@/types/cat";
-import { CatCard } from "@/app/components/CatCard";
+import { CatCard } from "@/app/components/cat/CatCard";
 import {
   Card,
   CardContent,
