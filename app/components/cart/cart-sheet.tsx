@@ -2,7 +2,7 @@ import { useCart } from "@/hooks/cart/useCart";
 import Link from "next/link";
 import { CartItem } from "@/types/cat"
 import { calculateItemTotal, calculateToalPrice } from "@/lib/cart/utils";
-import { updateCartItemAction } from "../admin/actions/cartActions";
+import { updateCartItemAction } from "@/app/admin/actions/cartActions";
 import {
   Sheet,
   SheetClose,

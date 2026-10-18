@@ -80,3 +80,19 @@ export type CartItem = {
   goods: CatGoods
   quantity: number
 }
+
+export type OrderItem = {
+  id: number;
+  quantity: number;
+  price: number;
+  goods: {
+    id: number;
+    name: string;
+  };
+};
+
+export type CatOrder = {
+  id: number;
+  createdAt: string;
+  items: OrderItem[];
+};
