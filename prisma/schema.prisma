@@ -42,30 +42,30 @@ model CatBlog {
 }
 
 model CatBlogCategory {
-  id      Int       @id @default(autoincrement())
-  name    String
-  slug    String?   @unique
-  catBlog CatBlog[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String?   @unique
+  catBlog   CatBlog[]
 }
 
 // 商品情報
 model CatGoods {    
-  id       Int     @id @default(autoincrement())
-  name     String
-  price    Int
-  imageKey String?
-  imageUrl String?
+  id        Int     @id @default(autoincrement())
+  name      String
+  price     Int
+  imageKey  String?
+  imageUrl  String?
 
-  cartItems  CatCartItem[]
-  orderitems OrderItem[]
+  cartItems   CatCartItem[]
+  orderitems  OrderItem[]
 }
 
 model CatCart {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  items CatCartItem[]
+  items       CatCartItem[]
 }
 
 model CatCartItem {

@@ -1,4 +1,5 @@
 import { EmailTemplate } from '@/app/components/email-template';
+import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -7,17 +8,31 @@ export async function POST() {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
-      to: ['kura56135613@gmail.com'],
-      subject: 'Hello world',
-      react: EmailTemplate({ username: 'John' }),
+      to: ['kr-scream.hurryx@ezweb.ne.jp'],  // resendに登録されているアドレスと合わせる
+      subject: 'テスト主題',
+      react: EmailTemplate({
+        username: "testuser",
+        email: "test@gmail.com",
+        subject: "テスト主題",
+        content: "フォーム開発の相談" }) as React.ReactElement,
     });
 
     if (error) {
-      return Response.json({ error }, { status: 500 });
+      console.error("Resend error:", error);
     }
 
-    return Response.json(data);
+    return NextResponse.json(data);
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
-  }
-}
+  console.error("API error:", error);
+
+  return NextResponse.json(
+    {
+      error: error instanceof Error
+        ? error.message
+        : String(error),
+    },
+    { status: 500 }
+  );
+}}
+
+// npm install @react-email/render
