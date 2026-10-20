@@ -47,8 +47,8 @@ export async function POST(request: NextRequest) {
         cartId: String(cartId),
       },
 
-      success_url: `${process.env.BASE_URL}/success`,
-      cancel_url: `${process.env.BASE_URL}/cart`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cart`,
     });
 
     return NextResponse.json({

@@ -16,9 +16,15 @@ export const useMailForm = () => {
     },
   });
 
-  const onSubmit = useCallback((values: any) => {
-    console.log(values)
-  },[]);  // 第2引数が配列になる
+  const onSubmit = useCallback(async (values: any) => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/send`, {
+        method: "POST",
+      });
+    } catch (error) {
+      console.error(error)
+    }
+  },[]);  // useCallbackを使った場合、第2引数が配列になる
 
   // const onSubmit = (values: {
   //   username: string;
