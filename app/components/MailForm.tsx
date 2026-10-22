@@ -102,6 +102,25 @@ export default function MailForm() {
             )}
           </Field>
 
+            {/* 画像 */}
+          <Field>
+            <FieldLabel htmlFor="subject">
+              タイトル
+            </FieldLabel>
+
+            <Input
+              id="subject"
+              {...form.register("subject")}
+              placeholder="タイトルを入力してください"
+            />
+
+            {form.formState.errors.subject && (
+              <FieldError>
+                {form.formState.errors.subject.message}
+              </FieldError>
+            )}
+          </Field>
+
           <Button type="submit">
             送信
           </Button>
