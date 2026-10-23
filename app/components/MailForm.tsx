@@ -104,19 +104,21 @@ export default function MailForm() {
 
             {/* 画像 */}
           <Field>
-            <FieldLabel htmlFor="subject">
-              タイトル
+            <FieldLabel htmlFor="file">
+              添付画像
             </FieldLabel>
 
             <Input
-              id="subject"
-              {...form.register("subject")}
+              type="file"
+              accept="image/*"   // 画像のみを許可する
+              id="file"
+              {...form.register("file")}
               placeholder="タイトルを入力してください"
             />
 
-            {form.formState.errors.subject && (
+            {form.formState.errors.file && (
               <FieldError>
-                {form.formState.errors.subject.message}
+                {form.formState.errors.file.message}
               </FieldError>
             )}
           </Field>
