@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { v4 as uuidv4 } from 'uuid'
 import { CreateCatRequestBody } from "@/app/api/admin/cats/route"
 import { Breed } from "@/types/cat"
-import CatListForm from "@/app/components/CatListForm"
+import CatListForm from "@/app/components/cat/CatListForm"
 import { supabase } from "@/libs/supabase"
 
 export default function CreateCatPage() {

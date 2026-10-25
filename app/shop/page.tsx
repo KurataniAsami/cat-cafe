@@ -34,7 +34,7 @@ export default function ShopPage() {
 
       <div className="flex">
         <main className="basis-[70%]">
-          <ul>
+          <ul className="flex justify-center gap-5">
             {goods.map((goods) => {
               return (
                 <li key={goods.id}>
@@ -46,8 +46,9 @@ export default function ShopPage() {
             })}
           </ul>
 
-          
-          <MenuModal/>
+          <MenuModal
+            goods={goods}
+          />
         </main>
       </div>
     </div>

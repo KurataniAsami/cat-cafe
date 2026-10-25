@@ -1,4 +1,3 @@
-import { number } from "zod"
 
 // 一覧表示の型
 export type CatList = {
@@ -67,7 +66,8 @@ export type CatGoods = {
   id:  number
   name: string
   price: number
-  imageKey: string | null
+  imageKey: string
+  imageUrl: string
 }
 
 export type CatGoodsIndexResponse = {

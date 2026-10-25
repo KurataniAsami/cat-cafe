@@ -10,8 +10,16 @@ import {
   DialogContent,
   DialogClose
 } from "@/components/ui/dialog"
+import { CatGoods } from "@/types/cat";
 
-export default function MenuModal() {
+type ModalProps = {
+  goods: CatGoods[]
+  
+}
+
+export default function MenuModal({
+  goods,
+}:ModalProps) {
   // 選択した商品の数量を管理
   const [quantity, setQuantity] = useState(1)
 
@@ -47,22 +55,25 @@ export default function MenuModal() {
             まわしていかないといけなくなるのでContext APIを使用する
         */}
         {/* <DialogTrigger>Open</DialogTrigger> */}
-        <DialogContent className="lg:max-w-4xl">
+        <DialogContent className="lg:max-w-3xl h-[240px] p-5">
           {selectedMenu && (
             <>
               <div className="flex gap-6">
                 {/* 左 画像 */}
                 <div className="relative aspect-square w-1/2 rounded-lg overflow-hidden">
-                  {/* <Image
-                    fill
-                    src={"selectedMenu.imageUrl"}
-                    alt={"selectedMenu.name"}
-                    className="object-cover"
-                  /> */}
+                  {selectedMenu?.imageUrl && (
+                    <Image
+                      src={selectedMenu.imageUrl}
+                      alt={selectedMenu.name}
+                      width={400}
+                      height={400}
+                      className="rounded object-cover"
+                    />
+                  )}
                 </div>
 
                 {/* 右 詳細 */}
-                <div className="flex flex-col flex-1 w-1/2">
+                <div className="flex flex-col flex-1">
                   {/* 上部：名前と単価 */}
                   <div className="space-y-2">
                     <p className="text-2xl font-bold">{selectedMenu.name}</p>
@@ -96,7 +107,7 @@ export default function MenuModal() {
                     <DialogClose
                       type="button"
                       onClick={handleAddToCart}
-                      className="mt-6 h-14 text-lg font-semibold bg-black text-white rounded-md"
+                      className="mt-6 h-12 text-lg font-semibold bg-black text-white rounded-md"
                     >
                       商品を追加（￥{selectedMenu.price * quantity}）
                     </DialogClose>

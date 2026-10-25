@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CatList } from "@/types/cat";
-import DeleteModal from "../components/DeletModal";
+import DeleteModal from "../components/blog/DeleteModal";
 import { Button } from "@/components/ui/button"
 
 export default function AdminHome() {
