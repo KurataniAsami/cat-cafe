@@ -60,6 +60,15 @@ export default function Home() {
 
   return (
     <div>
+      <div className="m-3">
+        <Link
+          href="/server"
+          className="bg-orange-400 p-1"  
+        >
+          サーバーコンポーネントでの実装はこちら
+        </Link>
+      </div>
+
       <h1 className="text-center text-2xl mt-5">お迎えしている猫たち</h1>
 
       {/* 描種一覧 */}

@@ -1,5 +1,16 @@
 import { z } from "zod";
 
+const MAX_MB = 5;
+const MAX_FILE_SIZE = MAX_MB * 1024 * 1024;   // サイズは5MBまで
+
+// 画像タイプ(この文字列を含む物を許可する)
+const ACCEPTED_IMAGE_TYPE = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+]
+
 export const formSchema = z.object({
   username: z
     .string()
@@ -25,7 +36,11 @@ export const formSchema = z.object({
   file: z
     .custom<FileList>()
     .refine((files) => files?.length !== 0, "ファイル画像が必要です")
-    .refine((files) => files?.[0].size <= 5 * 1024 * 1024),  // サイズは24MBまで
+    .refine(
+      (files) => files?.[0].size <= MAX_FILE_SIZE,
+      `画像サイズは${MAX_MB}MBまでです。`
+      // 画像タイプ
+    ).refine((files) => ),  
 });
 
 //  npm install zod
